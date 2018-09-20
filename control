@@ -1,0 +1,10 @@
+Package: com.i0stweak3r.foldercontroller
+Name: FolderControllerXI
+Depends: mobilesubstrate, preferenceloader
+Version: 1.0.3
+Architecture: iphoneos-arm
+Description: An awesome folder tweak for making custom layouts, adjusting the opacity, corner radius and other properties of folders, their icons, and background views. WIP.
+Maintainer: i0s_tweak3r
+Author: i0s_tweak3r
+Section: Tweaks
+Homepage: http://twitter.com/brianvs
