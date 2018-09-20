@@ -8,9 +8,6 @@
 @interface FolderControllerListController: PSListController 
 
 -(void)respring:(id)sender;
-/**
--(void)respring;
-**/
 -(void)twitter;
 -(void)Paypal;
 
@@ -39,7 +36,6 @@
 if (self) {
 		[((UISwitch *)[self control]) setOnTintColor:[UIColor blueColor]]; 
 
-//change the switch color
 
 	}
 	return self;
@@ -72,11 +68,8 @@ if (self) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/brianvs"]];
     }
 }
-/*
--(void)respring {
-         system("killall -9 SpringBoard");
-      }
-*/
+
+
 - (void)Paypal
 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://paypal.me/i0stweak3r"]];
