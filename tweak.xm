@@ -23,25 +23,7 @@ static double kCustomRows= 3.f;
 static double kCustomColumns= 3.f;
 
 static bool kCustomLayout = YES;
-/**
-@interface SBFolderControler : SBNestingViewController
-BOOL _isOpen;
--(void)_setHomescreenAndDockAlpha:(CGFloat)arg1;
 
-@end
-
-%hook SBFolderController
--(void)_setHomescreenAndDockAlpha:(CGFloat)arg1 {
-BOOL IsOpen= MSHookIvar<SBFolderController *>(self, _isOpen);
-if(IsOpen) {
-arg1= 0.2f;
-return %orig;
-}
-arg1= 1.f;
-return %orig;
-}
-%end
-**/
 %hook SBIconController
 -(bool) allowsNestedFolders {
 NSMutableDictionary *prefs = [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
@@ -196,7 +178,7 @@ return %orig;
 }
 %end
 
-/**
+/** NOT USING AT LEAST YET
 -(NSUInteger) currentEffect {
 if((kEnabled)&&(kPlainFX)) {
 
@@ -466,107 +448,7 @@ return %orig;
 %end
 
  /**
-
-%hook SBApplicationPlaceholder
--(bool) iconAllowsLaunch:(id)arg1 {
-return TRUE;
-}
-%end
-
-%hook SBBookmark
--(bool) iconAllowsLaunch:(id)arg1 {
-return TRUE;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool) allowsCapability:(long long)arg1 {
-return %orig;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool) allowsCapability:(long long)arg1 explanation:(id*) {
-return %orig;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool) allowsTransitionRequest:(id)arg1 {
-return TRUE;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool) _allowsCapabilitySuggestedApplicationWithExplanation:(id*)arg1 {
-return TRUE;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool) _allowsCapabilityLockScreenBulletinWithExplanation:(id*)arg1 {
-return %orig;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool) _allowsCapabilitySystemGestureWithExplanation:(id*)arg1 {
-return TRUE;
-}
-%end
-
-
-%hook SBPolicyAggregator
--(bool) _allowsCapabilityNotificationCenterWithExplanation:(id*)arg1 {
-return %orig;
-}
-%end
-
-
-%hook SBZoomableCrossfadeView
--(void) setAllowsGroupOpacityDuringCrossfade:(bool)arg1 {
-return %orig;
-}
-%end
-
-%hook SBZoomableCrossfadeView
--(bool) allowsGroupOpacityDuringCrossfade {
-return %orig;
-}
-%end
-
-
-%hook SBIconListView
--(bool) _allowsFocusToLeaveViaHeading:(unsigned long long)arg1 {
-return %orig;
-}
-%end
-
-%hook SBFolderTitleTextField
--(bool) allowsEditing {
-return TRUE;
-}
-%end
-
-%hook SBFolderSettings
--(void) setAllowNestedFolders:(bool)arg1 {
-arg1 = TRUE;
-return %orig;
-}
-%end
-
-%hook SBFolderSettings
--(bool) allowNestedFolders {
-return TRUE;
-}
-%end
-
-%hook SBApplicationPlaceholderController
--(void) _dropGrabbedIconIfNecessary:(id)arg1 completion:(id) {
-return %orig;
-}
-%end
-
+UNUSED CRAP
 
 %hook SBPrototypeController
 -(bool) _hasPreviousSettings {
@@ -762,70 +644,7 @@ return %orig;
 }
 %end
 
-%hook SBFolderController
--(bool) _restoreFromContext:(id)arg1 {
-return TRUE;
-}
-%end
 
-%hook SBFolderController
--(bool) _canDropIconInListView:(id)arg1 {
-return TRUE;
-}
-%end
-
-
-%hook SBFolderController
--(void) setCurrentPageIndexToListContainingIcon:(id)arg1 animated:(bool)arg2 completion:(id) {
-arg2 = TRUE;
-return %orig;
-}
-%end
-
-
-%hook SBFolderController
--(void) popFolderAnimated:(bool)arg1 completion:(id) {
-arg1 = TRUE;
-return %orig;
-}
-%end
-
-%hook SBFolderController
--(void) pushFolderIcon:(id)arg1 animated:(bool)arg2 completion:(id) {
-arg2 = TRUE;
-return %orig;
-}
-%end
-
-%hook SBFolderController
--(void) folder:(id)arg1 didRemoveLists:(id)arg2 atIndexes:(id) {
-return %orig;
-}
-%end
-
-%hook SBFolderController
--(void) folder:(id)arg1 didAddList:(id) {
-return %orig;
-}
-%end
-
-%hook SBFolderController
--(void) setCurrentPageIndexToListContainingIcon:(id)arg1 animated:(bool) {
-return %orig;
-}
-%end
-
-%hook SBFolderController
--(bool) shouldOpenFolderIcon:(id)arg1 {
-return %orig;
-}
-%end
-
-%hook SBFolderController
-+(Class) listViewClass {
-return %orig;
-}
-%end
 
 ****/
 //Just added next two methods
