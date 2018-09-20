@@ -451,25 +451,7 @@ return %orig;
 UNUSED CRAP
 
 %hook SBPrototypeController
--(bool) _hasPreviousSettings {
-return %orig;
-}
-%end
-
-%hook SBPrototypeController
--(bool) _restorePreviousSettings {
-return %orig;
-}
-%end
-
-%hook SBPrototypeController
 -(bool) isPrototypingEnabled {
-return %orig;
-}
-%end
-
-%hook SBPrototypeController
--(bool) isShowingSettingsUI {
 return %orig;
 }
 %end
@@ -493,12 +475,6 @@ return %orig;
 %end
 
 
-
-
-
-****/
-//Just added next two methods
-
 %hook SBPolicyAggregator
 -(bool) _allowsCapabilityHomeScreenEditingWithExplanation:(id*)arg1 {
 if((kEnabled)&&(kCustomLayout)) {
@@ -518,6 +494,7 @@ return %orig;
 return %orig;
 }
 %end
+*******/
 
  %hook SBFolderIconListView
 +(unsigned long long) maxVisibleIconRowsInterfaceOrientation:(long long)arg1 {
@@ -544,11 +521,11 @@ return %orig;
 }
 %end
 
-/**
+/**  WAITING TO IMPLEMENT, TEST
 %hook SBFolderIconListView
 -(double) bottomIconInset {
 if(kCustomLayout) {
-return 10.f;
+return kBottomInset;
 }
 return %orig;
 }
@@ -557,7 +534,7 @@ return %orig;
 %hook SBFolderIconListView
 -(double) sideIconInset {
 if(kCustomLayout) {
-return 10.f;
+return kSideInset;
 }
 return %orig;
 }
@@ -566,7 +543,7 @@ return %orig;
 %hook SBFolderIconListView
 -(double) topIconInset {
 if(kCustomLayout) {
-return 10.f;
+return kTopInset;
 }
 return %orig;
 }
@@ -621,14 +598,8 @@ kNoFX= ([prefs objectForKey:@"noFX"] ? [[prefs objectForKey:@"noFX"] boolValue] 
 kReducedTransOn= ([prefs objectForKey:@"reducedTransOn"] ? [[prefs objectForKey:@"reducedTransOn"] boolValue] : NO);
 
 kUnknownFX= ([prefs objectForKey:@"UnknownFX"] ? [[prefs objectForKey:@"UnknownFX"] boolValue] : NO);
-
-/**
-kpickedRadius = ([prefs objectForKey:@"pickedRadius"] ? [[prefs objectForKey:@"pickedRadius"] floatValue] : kpickedRadius);
-
-kContinuousControl=([prefs objectForKey:@"continuousControl"] ? [[prefs objectForKey:@"continuousControl"] doubleValue] : kContinuousControl); 
-
-kExtraViewsRadius = ([prefs objectForKey:@"extraViewsRadius"] ? [[prefs objectForKey:@"extraViewsRadius"] floatValue] : kExtraViewsRadius);
-**/
+//plainFX is same as making inactive, havent tested unknown was curious so just set it up for implementation
+//neither plainFX OR unknownFx are in prefs as options right now
 }
 [prefs release];
 }
