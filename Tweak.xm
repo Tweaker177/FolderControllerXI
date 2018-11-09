@@ -71,11 +71,8 @@ return YES;
 return %orig;
 }
 %end
-/*** NEW ****/
+
 %hook SBIconListView
-/* Not used was curious what it does
--(void)showAllIcons;
-*/
 -(void)updateEditingStateAnimated:(BOOL)arg1 {
 if((kEnabled)&&(kWantsNested)) {
 arg1= 0;
@@ -163,6 +160,9 @@ return %orig;
 }
 %end
 
+/* This method changes corner radius of folder icons, but SNOWBOARD tweak and theme engine makes it not work.
+works with ANEMONE still. */
+
 %hook SBIconImageView
 +(double)cornerRadius {
 if((kEnabled)&&(kWantsCornerRadius)) {
@@ -190,6 +190,12 @@ return 0;
 return %orig;
 }
 
+/* FROM runtime header, this fixes bug where folder splits to multiple
+folders in landscape and loses dark BG. Keeps scrolling as way to see next page. */
+
+-(BOOL)_shouldConvertToMultipleIconListsInLandscapeOrientation {
+return NO;
+}
 
 -(bool) _tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
 if((kEnabled)&&(kWantsTapToClose)) {
@@ -214,8 +220,6 @@ return %orig(arg1);
 return %orig;
 }
 %end
-
-
 
 
 %hook SBFolderControllerBackgroundView
@@ -281,8 +285,7 @@ return %orig(arg1);
 }
 return %orig;
 }
-/**** this was taken out of last build *********/
-
+//this is necessary for open folder radius changes
 +(CGFloat)cornerRadiusToInsetContent {
 if((kEnabled)&&(kWantsCornerRadius)) {
 return kBackgroundFolderRadius;
