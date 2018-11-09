@@ -16,7 +16,7 @@
 			<key>cell</key>
 			<string>PSTitleValueCell</string>
 			<key>height</key>
-			<integer>48</integer>
+			<integer>70</integer>
 			<key>icon</key>
 			<string>FolderController@3x.png</string>
 			<key>label</key>
@@ -164,7 +164,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable to change corner radius of folders. Respring needed to take affect for folder icons.</string>
+			<string>Enable to change corner radius of folders. Respring needed to take affect for folder icons. NOTE: closed folder radius changes do not work with Snowboard. Open changes work with both theme engines.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -186,7 +186,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjust closed folders' (folder icons) corner radius from 0 being squared and 28-30 being circular.</string>
+			<string>Adjust closed folders (folder icons) corner radius from 0 being squared and 28-30 being circular. (Doesn’t work if using Snowboard theme engine.) Works perfectly with Anemone.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -272,7 +272,23 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Options to adjust appearance of the home screen blur/ background behind an open folder..</string>
+			<string>Options to adjust appearance of title and the home screen blur/ background behind an open folder..am going to remove dock and icons for no blur option soon so it’s like iOS 10.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>SRSwitchTableCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>hidesTitle</string>
+			<key>label</key>
+			<string>Hide title when folder open</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -310,7 +326,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Set custom number of rows and columns in open folders. Affects all folders. Will add custom insets soon but looks good for most layouts already.</string>
+			<string>Set custom number of rows and columns in open folders. Affects all folders. Note: may require up to 2 resprings for some layout changes. May not require any if you adjust insets after making changes. </string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -348,7 +364,7 @@
 			<key>key</key>
 			<string>customRows</string>
 			<key>max</key>
-			<integer>5</integer>
+			<integer>7</integer>
 			<key>min</key>
 			<integer>2</integer>
 			<key>showValue</key>
@@ -374,9 +390,109 @@
 			<key>key</key>
 			<string>customColumns</string>
 			<key>max</key>
-			<integer>5</integer>
+			<integer>7</integer>
 			<key>min</key>
 			<integer>1</integer>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Allows use of sliders to tweak insets inside open folders.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>SRSwitchTableCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>wantsCustomInsets</string>
+			<key>label</key>
+			<string>Enable custom insets</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjusts top icon inset. Negative values reduce inset, positive make them bigger. Zero keeps layout that iOS determines based on number of icons in folder. </string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.0</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>isSegmented</key>
+			<false/>
+			<key>key</key>
+			<string>topInset</string>
+			<key>max</key>
+			<real>0.98999999999999999</real>
+			<key>min</key>
+			<real>-0.98999999999999999</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjusts side icon insets. Negative values reduce insets, positive make them bigger. Zero keeps layout that iOS determines based on number of icons in folder. </string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.0</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>isSegmented</key>
+			<false/>
+			<key>key</key>
+			<string>sideInset</string>
+			<key>max</key>
+			<real>0.98999999999999999</real>
+			<key>min</key>
+			<real>-0.98999999999999999</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjusts bottom icon inset. Negative values reduce inset, positive makes them bigger. Zero keeps layout that iOS determines based on number of icons in folder. </string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.0</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>isSegmented</key>
+			<false/>
+			<key>key</key>
+			<string>bottomInset</string>
+			<key>max</key>
+			<real>0.98999999999999999</real>
+			<key>min</key>
+			<real>-0.98999999999999999</real>
 			<key>showValue</key>
 			<true/>
 		</dict>
@@ -440,7 +556,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string></string>
+			<string>My GF is fighting to stay alive after 5 years of battling cancer. Donations are more then appreciated, they motivate me to continue developing free tweaks.</string>
 		</dict>
 		<dict>
 			<key>action</key>
