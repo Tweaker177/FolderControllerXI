@@ -190,13 +190,17 @@ return 0;
 return %orig;
 }
 
-/* FROM runtime header, this fixes bug where folder splits to multiple
-folders in landscape and loses dark BG. Keeps scrolling as way to see next page. */
+/*******
+FROM runtime header, this fixes bug where folder splits to multiple
+folders in landscape and loses dark BG. Keeps scrolling as the way to see next page. 
+JUST commented out because I did something that caused icons to scroll instead of move in either landscape or portrait
+but I think it was a huge update I deleted altogether that involved using lockscreen wallpaper for folder background.
+Think I did somethimg wrong in an interface or two.
 
 -(BOOL)_shouldConvertToMultipleIconListsInLandscapeOrientation {
 return NO;
 }
-
+*********+/
 -(bool) _tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
 if((kEnabled)&&(kWantsTapToClose)) {
 return YES;
