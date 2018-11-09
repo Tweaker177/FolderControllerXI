@@ -193,7 +193,7 @@ return %orig;
 /*******
 FROM runtime header, this fixes bug where folder splits to multiple
 folders in landscape and loses dark BG. Keeps scrolling as the way to see next page. 
-JUST commented out because I did something that caused icons to scroll instead of move in either landscape or portrait
+JUST commented out because I did something that caused icons to scroll instead of move when trying to rearrange placement of icons, happened in both landscape and portrait
 but I think it was a huge update I deleted altogether that involved using lockscreen wallpaper for folder background.
 Think I did somethimg wrong in an interface or two.
 
