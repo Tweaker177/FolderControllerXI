@@ -200,7 +200,7 @@ Think I did somethimg wrong in an interface or two.
 -(BOOL)_shouldConvertToMultipleIconListsInLandscapeOrientation {
 return NO;
 }
-*********+/
+*********/
 -(bool) _tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
 if((kEnabled)&&(kWantsTapToClose)) {
 return YES;
