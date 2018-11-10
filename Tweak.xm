@@ -33,7 +33,8 @@ static bool kHidesTitle = YES;
 
 /* new methods in iOS 10 that I think blocks nested folders */
 
-% hook SBIconLayoutOverrideStrategy - (BOOL)preservesCurrentListOrigin {
+%hook SBIconLayoutOverrideStrategy
+- (bool)preservesCurrentListOrigin {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
@@ -43,22 +44,21 @@ static bool kHidesTitle = YES;
     if ((kEnabled) && (kWantsNested)) {
         return 1;
     }
-    return % orig;
+    return %orig;
 }
 
 - (id)initWithLayoutInsets:(UIEdgeInsets)arg1
-perservingCurrentListOrigin:(BOOL)arg2 {
+perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         arg2 = 1;
-        return % orig(arg1, arg2);
+        return %orig(arg1, arg2);
     }
-    return % orig;
+    return %orig;
 }
+%end
 
-% end
-
-% hook SBIconController -
-(bool)allowsNestedFolders {
+%hook SBIconController
+- (bool)allowsNestedFolders {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
@@ -68,41 +68,40 @@ perservingCurrentListOrigin:(BOOL)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return YES;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBIconListView -
-(void)updateEditingStateAnimated : (BOOL)arg1 {
+%hook SBIconListView
+- (void)updateEditingStateAnimated : (bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = 0;
-        return % orig;
+        return %orig;
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)_sendLayoutDelegateWouldHaveMovedIcon:(id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = nil;
-        % orig(arg1);
+        %orig(arg1);
     }
-    % orig;
+    %orig;
 }
 
-- (BOOL)allowsAddingIconCount:(unsigned long long)arg1 {
+- (bool)allowsAddingIconCount:(unsigned long long)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         return 1;
-        % orig;
+        %orig;
     } else {
-        return % orig;
+        return %orig;
     }
 }
-%
-end
+%end
 /** Just added ***/
 
-% hook SBFolderController -
-(BOOL)canAcceptFolderIconDrags {
+%hook SBFolderController
+- (bool)canAcceptFolderIconDrags {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     
@@ -113,12 +112,12 @@ end
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderSettings -
-(bool)allowNestedFolders {
+%hook SBFolderSettings
+-(bool)allowNestedFolders {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     
@@ -129,7 +128,7 @@ end
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setAllowNestedFolders:(bool)arg1 {
@@ -143,9 +142,9 @@ end
     
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setPinchToClose:(bool)arg1 {
@@ -157,41 +156,40 @@ end
     
     if ((kEnabled) && (kWantsPinchToClose)) {
         arg1 = YES;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
-%
-end
+%end
 
 /* This method changes corner radius of folder icons, but SNOWBOARD
  tweak and theme engine makes it not work. works with ANEMONE still. */
 
-% hook SBIconImageView +
-(double)cornerRadius {
+%hook SBIconImageView
++(double)cornerRadius {
     if ((kEnabled) && (kWantsCornerRadius)) {
         return kIconCornerRadius;
     }
-    return % orig;
+    return %orig;
 }
 
-% end
+%end
 
-% hook SBFolderView -
-(bool)textFieldShouldReturn {
+%hook SBFolderView
+-(bool)textFieldShouldReturn {
     if (kHidesTitle) {
         return 0;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFloatyFolderView -
-(bool)_showsTitle {
+%hook SBFloatyFolderView
+-(bool)_showsTitle {
     if (kHidesTitle) {
         return 0;
     }
-    return % orig;
+    return %orig;
 }
 
 /*******
@@ -203,16 +201,16 @@ end
  that involved using lockscreen wallpaper for folder background. Think I did
  somethimg wrong in an interface or two.
  
- -(BOOL)_shouldConvertToMultipleIconListsInLandscapeOrientation {
+ -(bool)_shouldConvertToMultipleIconListsInLandscapeOrientation {
  return NO;
  }
  *********/
 - (bool)_tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
     if ((kEnabled) && (kWantsTapToClose)) {
         return YES;
-        % orig;
+        %orig;
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setBackgroundAlpha:(CGFloat)arg1 {
@@ -226,41 +224,40 @@ end
     
     if ((kEnabled) && (kFloatyOpacityEnabled)) {
         arg1 = kFloatyOpacity / 100;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderControllerBackgroundView -
-(BOOL)effectActive {
+%hook SBFolderControllerBackgroundView
+-(bool)effectActive {
     if ((kEnabled) && (kNoFX)) {
         // removes blur
         return FALSE;
     }
-    return % orig;
+    return %orig;
 }
 
-- (BOOL)isReduceTransparencyEnabled {
+- (bool)isReduceTransparencyEnabled {
     if ((kEnabled) && (kReducedTransOn)) {
         return TRUE;
         // makes backgroundViews darker
     }
-    return % orig;
+    return %orig;
 }
 
-- (void)setEffectActive:(BOOL)arg1 {
+- (void)setEffectActive:(bool)arg1 {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     kNoFX = [[prefs objectForKey:@"noFX"] boolValue];
     if ((kEnabled) && (kNoFX)) {
         arg1 = FALSE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
-%
-end
+%end
 
 /** NOT USING AT LEAST YET
  -(NSUInteger) currentEffect {
@@ -288,26 +285,26 @@ end
  **/
 // Playing with FX
 
-% hook SBFolderBackgroundView -
-(void)_setContinuousCornerRadius : (CGFloat)arg1 {
+%hook SBFolderBackgroundView
+-(void)_setContinuousCornerRadius : (CGFloat)arg1 {
     if ((kEnabled) && (kWantsCornerRadius)) {
         arg1 = kBackgroundFolderRadius;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 // this is necessary for open folder radius changes
 + (CGFloat)cornerRadiusToInsetContent {
     if ((kEnabled) && (kWantsCornerRadius)) {
         return kBackgroundFolderRadius;
     }
-    return % orig;
+    return %orig;
 }
 
-% end
+%end
 
-% hook SBIconColorSettings -
-(bool)blurryFolderIcons {
+%hook SBIconColorSettings
+-(bool)blurryFolderIcons {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     kFolderIconOpacityEnabled =
@@ -318,7 +315,7 @@ end
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return FALSE;
     }
-    return % orig;
+    return %orig;
 }
 
 - (double)colorAlpha {
@@ -333,7 +330,7 @@ end
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return kFolderIconOpacityColor / 100;
     }
-    return % orig;
+    return %orig;
 }
 
 - (double)whiteAlpha {
@@ -348,12 +345,12 @@ end
         
         return kFolderIconOpacityWhite / 100;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFWallpaperSettings -
-(bool)replaceBlurs {
+%hook SBFWallpaperSettings
+-(bool)replaceBlurs {
     NSMutableDictionary *prefs =
     [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
     kFolderIconOpacityEnabled =
@@ -364,78 +361,78 @@ end
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBApplicationPlaceholder -
-(bool)iconAllowsLaunch : (id)arg1 {
+%hook SBApplicationPlaceholder
+-(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBBookmark -
-(bool)iconAllowsLaunch : (id)arg1 {
+%hook SBBookmark
+-(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBPolicyAggregator -
-(bool)allowsCapability : (long long)arg1 {
+%hook SBPolicyAggregator
+-(bool)allowsCapability : (long long)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBPolicyAggregator -
-(bool)allowsTransitionRequest : (id)arg1 {
+%hook SBPolicyAggregator
+-(bool)allowsTransitionRequest : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBIconListModel -
-(bool)allowsAddingIcon : (id)arg1 {
+%hook SBIconListModel
+-(bool)allowsAddingIcon : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBStarkIconListModel -
-(bool)allowsAddingIcon : (id)arg1 {
+%hook SBStarkIconListModel
+-(bool)allowsAddingIcon : (id)arg1 {
     
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBIconModel -
-(void)setAllowsSaving : (bool)arg1 {
+%hook SBIconModel
+-(void)setAllowsSaving : (bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 
 - (bool)allowsSaving {
@@ -443,158 +440,157 @@ end
         
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBApplication -
-(bool)iconAllowsLaunch : (id)arg1 {
+%hook SBApplication
+-(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBSpringBoardApplicationIcon -
-(bool)iconAllowsLaunch : (id)arg1 {
+%hook SBSpringBoardApplicationIcon
+-(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBStarkIconController -
-(bool)iconAllowsLaunch : (id)arg1 {
+%hook SBStarkIconController
+-(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBIconView -
-(bool)allowsTapWhileEditing {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return % orig;
-}
-% end
-
-% hook SBFolderIconView -
-(bool)allowsTapWhileEditing {
+%hook SBIconView
+-(bool)allowsTapWhileEditing {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderController -
-(bool)_allowUserInteraction {
+%hook SBFolderIconView
+-(bool)allowsTapWhileEditing {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBPolicyAggregator -
-(bool)_allowsCapabilitySpotlightWithExplanation : (id *)arg1 {
+%hook SBFolderController
+-(bool)_allowUserInteraction {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderTitleTextField -
-(void)setAllowsEditing : (bool)arg1 {
+%hook SBPolicyAggregator
+-(bool)_allowsCapabilitySpotlightWithExplanation : (id *)arg1 {
+    if ((kEnabled) && (kWantsNested)) {
+        %orig;
+        return TRUE;
+    }
+    return %orig;
+}
+%end
+
+%hook SBFolderTitleTextField
+-(void)setAllowsEditing : (bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBIconListModel -
-(bool)addIcon : (id)arg1 {
+%hook SBIconListModel
+-(bool)addIcon : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderIconListView +
-(unsigned long long)maxVisibleIconRowsInterfaceOrientation
+%hook SBFolderIconListView
++(unsigned long long)maxVisibleIconRowsInterfaceOrientation
 : (long long)arg1 {
     if ((kEnabled) && (kCustomLayout)) {
-        % orig;
+        %orig;
         return kCustomRows;
     }
     
-    return % orig;
+    return %orig;
 }
 
-% end
+%end
 
-% hook SBFolderIconListView +
-(unsigned long long)iconColumnsForInterfaceOrientation : (long long)arg1 {
+%hook SBFolderIconListView
++(unsigned long long)iconColumnsForInterfaceOrientation : (long long)arg1 {
     
     if ((kEnabled) && (kCustomLayout)) {
         
-        % orig;
+        %orig;
         return kCustomColumns;
     }
     
-    return % orig;
+    return %orig;
 }
-%
-end
+%end
 
 /**  Custom inset tweaking relative to original insets determined by
  number of icons per row or column **/
-% hook SBFolderIconListView -
-(double)bottomIconInset {
+%hook SBFolderIconListView
+-(double)bottomIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = % orig;
+        double IconInset = %orig;
         IconInset = IconInset - (IconInset * kBottomInset);
         return IconInset;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderIconListView -
-(double)sideIconInset {
+%hook SBFolderIconListView
+-(double)sideIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = % orig;
+        double IconInset = %orig;
         IconInset = IconInset - (IconInset * kSideInset);
         return IconInset;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
-% hook SBFolderIconListView -
-(double)topIconInset {
+%hook SBFolderIconListView
+-(double)topIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = % orig;
+        double IconInset = %orig;
         IconInset = IconInset - (IconInset * kTopInset);
         return IconInset;
     }
-    return % orig;
+    return %orig;
 }
-% end
+%end
 
 static void
 loadPrefs() {
@@ -658,7 +654,7 @@ loadPrefs() {
      */
 }
 
-% ctor {
+%ctor {
     CFNotificationCenterAddObserver(
                                     CFNotificationCenterGetDarwinNotifyCenter(), NULL,
                                     (CFNotificationCallback)loadPrefs,
