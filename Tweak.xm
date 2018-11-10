@@ -44,16 +44,16 @@ static bool kHidesTitle = YES;
     if ((kEnabled) && (kWantsNested)) {
         return 1;
     }
-    return % orig;
+    return %orig;
 }
 
 - (id)initWithLayoutInsets:(UIEdgeInsets)arg1
 perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         arg2 = 1;
-        return % orig(arg1, arg2);
+        return %orig(arg1, arg2);
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -68,7 +68,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return YES;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -76,25 +76,25 @@ perservingCurrentListOrigin:(bool)arg2 {
 - (void)updateEditingStateAnimated : (bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = 0;
-        return % orig;
+        return %orig;
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)_sendLayoutDelegateWouldHaveMovedIcon:(id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = nil;
-        % orig(arg1);
+        %orig(arg1);
     }
-    % orig;
+    %orig;
 }
 
 - (bool)allowsAddingIconCount:(unsigned long long)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         return 1;
-        % orig;
+        %orig;
     } else {
-        return % orig;
+        return %orig;
     }
 }
 %end
@@ -112,7 +112,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -128,7 +128,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setAllowNestedFolders:(bool)arg1 {
@@ -142,9 +142,9 @@ perservingCurrentListOrigin:(bool)arg2 {
     
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setPinchToClose:(bool)arg1 {
@@ -156,9 +156,9 @@ perservingCurrentListOrigin:(bool)arg2 {
     
     if ((kEnabled) && (kWantsPinchToClose)) {
         arg1 = YES;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -170,7 +170,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsCornerRadius)) {
         return kIconCornerRadius;
     }
-    return % orig;
+    return %orig;
 }
 
 %end
@@ -180,7 +180,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if (kHidesTitle) {
         return 0;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -189,7 +189,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if (kHidesTitle) {
         return 0;
     }
-    return % orig;
+    return %orig;
 }
 
 /*******
@@ -208,9 +208,9 @@ perservingCurrentListOrigin:(bool)arg2 {
 - (bool)_tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
     if ((kEnabled) && (kWantsTapToClose)) {
         return YES;
-        % orig;
+        %orig;
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setBackgroundAlpha:(CGFloat)arg1 {
@@ -224,9 +224,9 @@ perservingCurrentListOrigin:(bool)arg2 {
     
     if ((kEnabled) && (kFloatyOpacityEnabled)) {
         arg1 = kFloatyOpacity / 100;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -236,7 +236,7 @@ perservingCurrentListOrigin:(bool)arg2 {
         // removes blur
         return FALSE;
     }
-    return % orig;
+    return %orig;
 }
 
 - (bool)isReduceTransparencyEnabled {
@@ -244,7 +244,7 @@ perservingCurrentListOrigin:(bool)arg2 {
         return TRUE;
         // makes backgroundViews darker
     }
-    return % orig;
+    return %orig;
 }
 
 - (void)setEffectActive:(bool)arg1 {
@@ -253,9 +253,9 @@ perservingCurrentListOrigin:(bool)arg2 {
     kNoFX = [[prefs objectForKey:@"noFX"] boolValue];
     if ((kEnabled) && (kNoFX)) {
         arg1 = FALSE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -289,16 +289,16 @@ perservingCurrentListOrigin:(bool)arg2 {
 -(void)_setContinuousCornerRadius : (CGFloat)arg1 {
     if ((kEnabled) && (kWantsCornerRadius)) {
         arg1 = kBackgroundFolderRadius;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 // this is necessary for open folder radius changes
 + (CGFloat)cornerRadiusToInsetContent {
     if ((kEnabled) && (kWantsCornerRadius)) {
         return kBackgroundFolderRadius;
     }
-    return % orig;
+    return %orig;
 }
 
 %end
@@ -315,7 +315,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return FALSE;
     }
-    return % orig;
+    return %orig;
 }
 
 - (double)colorAlpha {
@@ -330,7 +330,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return kFolderIconOpacityColor / 100;
     }
-    return % orig;
+    return %orig;
 }
 
 - (double)whiteAlpha {
@@ -345,7 +345,7 @@ perservingCurrentListOrigin:(bool)arg2 {
         
         return kFolderIconOpacityWhite / 100;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -361,57 +361,57 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBApplicationPlaceholder
 -(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBBookmark
 -(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBPolicyAggregator
 -(bool)allowsCapability : (long long)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBPolicyAggregator
 -(bool)allowsTransitionRequest : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBIconListModel
 -(bool)allowsAddingIcon : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -419,10 +419,10 @@ perservingCurrentListOrigin:(bool)arg2 {
 -(bool)allowsAddingIcon : (id)arg1 {
     
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -430,9 +430,9 @@ perservingCurrentListOrigin:(bool)arg2 {
 -(void)setAllowsSaving : (bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 
 - (bool)allowsSaving {
@@ -440,37 +440,37 @@ perservingCurrentListOrigin:(bool)arg2 {
         
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBApplication
 -(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBSpringBoardApplicationIcon
 -(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBStarkIconController
 -(bool)iconAllowsLaunch : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -479,7 +479,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -488,7 +488,7 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -497,17 +497,17 @@ perservingCurrentListOrigin:(bool)arg2 {
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBPolicyAggregator
 -(bool)_allowsCapabilitySpotlightWithExplanation : (id *)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -515,19 +515,19 @@ perservingCurrentListOrigin:(bool)arg2 {
 -(void)setAllowsEditing : (bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
-        return % orig(arg1);
+        return %orig(arg1);
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBIconListModel
 -(bool)addIcon : (id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
-        % orig;
+        %orig;
         return TRUE;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -535,11 +535,11 @@ perservingCurrentListOrigin:(bool)arg2 {
 +(unsigned long long)maxVisibleIconRowsInterfaceOrientation
 : (long long)arg1 {
     if ((kEnabled) && (kCustomLayout)) {
-        % orig;
+        %orig;
         return kCustomRows;
     }
     
-    return % orig;
+    return %orig;
 }
 
 %end
@@ -549,11 +549,11 @@ perservingCurrentListOrigin:(bool)arg2 {
     
     if ((kEnabled) && (kCustomLayout)) {
         
-        % orig;
+        %orig;
         return kCustomColumns;
     }
     
-    return % orig;
+    return %orig;
 }
 %end
 
@@ -562,33 +562,33 @@ perservingCurrentListOrigin:(bool)arg2 {
 %hook SBFolderIconListView
 -(double)bottomIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = % orig;
+        double IconInset = %orig;
         IconInset = IconInset - (IconInset * kBottomInset);
         return IconInset;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBFolderIconListView
 -(double)sideIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = % orig;
+        double IconInset = %orig;
         IconInset = IconInset - (IconInset * kSideInset);
         return IconInset;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
 %hook SBFolderIconListView
 -(double)topIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = % orig;
+        double IconInset = %orig;
         IconInset = IconInset - (IconInset * kTopInset);
         return IconInset;
     }
-    return % orig;
+    return %orig;
 }
 %end
 
