@@ -1,5 +1,6 @@
-ARCHS = armv7 arm64 armv7s
-TARGET= iphone:clang:9.2:7.0
+ARCHS = arm64 armv7
+TARGET= iphone:clang:11.2:7.0
+DEBUG = 0
 include theos/makefiles/common.mk
 
 BUNDLE_NAME = FolderController

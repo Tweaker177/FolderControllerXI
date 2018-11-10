@@ -1,14 +1,14 @@
-ARCHS = armv7 arm64 armv7s
-TARGET = iphone:clang:9.2:7.0
+ARCHS = arm64 armv7
+TARGET = iphone:clang:11.2:7.0
+DEBUG = 0
 #CFLAGS = -fobjc-arc
 #THEOS_PACKAGE_DIR_NAME = debs
 
-include theos/makefiles/common.mk
+include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = FolderController
 FolderController_FILES = Tweak.xm
-FolderController_FRAMEWORKS = UIKit
-FolderController_LDFLAGS += -Wl,-segalign,4000
+FolderController_FRAMEWORKS = UIKit Foundation
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 
