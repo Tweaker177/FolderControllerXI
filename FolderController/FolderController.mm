@@ -46,7 +46,7 @@ if (self) {
 @implementation FolderControllerListController
 - (id)specifiers {
 	if(_specifiers == nil) {
-		_specifiers = [[self loadSpecifiersFromPlistName:@"FolderController" target:self] retain];
+		_specifiers = [self loadSpecifiersFromPlistName:@"FolderController" target:self];
 	}
 	return _specifiers;
 }
