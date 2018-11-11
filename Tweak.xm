@@ -35,12 +35,6 @@ static bool kHidesTitle = YES;
 
 %hook SBIconLayoutOverrideStrategy
 - (bool)preservesCurrentListOrigin {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kWantsNested)) {
         return 1;
     }
@@ -59,12 +53,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 %hook SBIconController
 - (bool)allowsNestedFolders {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kWantsNested)) {
         return YES;
     }
@@ -102,13 +90,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 %hook SBFolderController
 - (bool)canAcceptFolderIconDrags {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
-    kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
-    
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
@@ -118,13 +99,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 %hook SBFolderSettings
 -(bool)allowNestedFolders {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
-    kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
-    
     if ((kEnabled) && (kWantsNested)) {
         return TRUE;
     }
@@ -132,14 +106,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 
 - (void)setAllowNestedFolders:(bool)arg1 {
-    
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
-    kWantsNested = [[prefs objectForKey:@"wantsNested"] boolValue];
-    
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
         return %orig(arg1);
@@ -148,12 +114,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 
 - (void)setPinchToClose:(bool)arg1 {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kWantsPinchToClose = [[prefs objectForKey:@"wantsPinchToClose"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kWantsPinchToClose)) {
         arg1 = YES;
         return %orig(arg1);
@@ -214,14 +174,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 
 - (void)setBackgroundAlpha:(CGFloat)arg1 {
-    
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
-    kFloatyOpacityEnabled =
-    [[prefs objectForKey:@"floatyOpacityEnabled"] boolValue];
-    
     if ((kEnabled) && (kFloatyOpacityEnabled)) {
         arg1 = kFloatyOpacity / 100;
         return %orig(arg1);
@@ -248,9 +200,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 
 - (void)setEffectActive:(bool)arg1 {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kNoFX = [[prefs objectForKey:@"noFX"] boolValue];
     if ((kEnabled) && (kNoFX)) {
         arg1 = FALSE;
         return %orig(arg1);
@@ -305,13 +254,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 %hook SBIconColorSettings
 -(bool)blurryFolderIcons {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kFolderIconOpacityEnabled =
-    [[prefs objectForKey:@"folderIconOpacityEnabled"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return FALSE;
     }
@@ -319,14 +261,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 
 - (double)colorAlpha {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    
-    kFolderIconOpacityEnabled =
-    [[prefs objectForKey:@"folderIconOpacityEnabled"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return kFolderIconOpacityColor / 100;
     }
@@ -334,13 +268,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 
 - (double)whiteAlpha {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kFolderIconOpacityEnabled =
-    [[prefs objectForKey:@"folderIconOpacityEnabled"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         
         return kFolderIconOpacityWhite / 100;
@@ -351,13 +278,6 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 %hook SBFWallpaperSettings
 -(bool)replaceBlurs {
-    NSMutableDictionary *prefs =
-    [[NSMutableDictionary alloc] initWithContentsOfFile:PLIST_PATH];
-    kFolderIconOpacityEnabled =
-    [[prefs objectForKey:@"folderIconOpacityEnabled"] boolValue];
-    
-    kEnabled = [[prefs objectForKey:@"enabled"] boolValue];
-    
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
         return TRUE;
     }
