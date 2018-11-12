@@ -140,7 +140,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjust color alpha of  folder icons.</string>
+			<string>Adjust color alpha of folder icons.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -164,7 +164,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable to change corner radius of folders. Respring needed to take affect for folder icons. NOTE: closed folder radius changes do not work with Snowboard. Open changes work with both theme engines.</string>
+			<string>Enable to change corner radius of folders. Respring needed to take affect for folder icons. NOTE: closed folder radius changes do not work if using Snowboard. </string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -186,7 +186,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjust closed folders (folder icons) corner radius from 0 being squared and 28-30 being circular. (Doesn’t work if using Snowboard theme engine.) Works perfectly with Anemone.</string>
+			<string>Adjust closed folders (folder icons) corner radius from 0 being squared and 28-30 being circular. (Doesn’t work if using Snowboard theme engine.)</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -210,7 +210,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjust corner radius for open folder backgrounds, so far iOS 11 ONLY feature. Will add lower versions soon.</string>
+			<string>Adjust corner radius for open folder backgrounds. iOS 11 ONLY feature. Will add lower versions soon.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -234,7 +234,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Options for how to close folders. Tap allows you to tap anywhere, including inside folders, pinch to close uses pinch gesture outside of folder to close it. (Pinch requires respring)</string>
+			<string>Options for how to close folders. Tap allows you to tap anywhere, pinch to close uses pinch gesture outside of folder to close it. (Pinch requires respring)</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -272,7 +272,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Options to adjust appearance of title and the home screen blur/ background behind an open folder..am going to remove dock and icons for no blur option soon so it’s like iOS 10.</string>
+			<string>Options to adjust appearance of title and the home screen blur/ background behind an open folder. No resprings needed.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -304,7 +304,7 @@
 			<key>key</key>
 			<string>noFX</string>
 			<key>label</key>
-			<string>No FX / blurs disabled</string>
+			<string>No blur (iOS 11)</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -320,13 +320,13 @@
 			<key>key</key>
 			<string>reducedTransOn</string>
 			<key>label</key>
-			<string>Dark background</string>
+			<string>Dark background (iOS 11)</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Set custom number of rows and columns in open folders. Affects all folders. Note: may require up to 2 resprings for some layout changes. May not require any if you adjust insets after making changes. </string>
+			<string>Set custom number of rows and columns in open folders. Affects all folders. Should update immediately, if not hit "Apply changes".</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -348,7 +348,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjust slider to set custom max number of rows inside open folders. Hit "Apply Changes" to take affect.</string>
+			<string>Adjust slider to set custom max number of rows inside open folders.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -374,7 +374,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Set custom number of columns inside folder. Hit "Apply Changes" to take affect.</string>
+			<string>Set custom number of columns inside folder.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -400,7 +400,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Allows use of sliders to tweak insets inside open folders.</string>
+			<string>Allows use of sliders to tweak insets inside open folders. (Relative to original insets for layout)</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -422,7 +422,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjusts top icon inset. Negative values reduce inset, positive make them bigger. Zero keeps layout that iOS determines based on number of icons in folder. </string>
+			<string>Adjusts top icon inset. Negative values reduce inset, positive make them bigger. </string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -448,7 +448,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjusts side icon insets. Negative values reduce insets, positive make them bigger. Zero keeps layout that iOS determines based on number of icons in folder. </string>
+			<string>Adjusts side icon insets. Negative values reduce insets, positive make them bigger.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -474,7 +474,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjusts bottom icon inset. Negative values reduce inset, positive makes them bigger. Zero keeps layout that iOS determines based on number of icons in folder. </string>
+			<string>Adjusts bottom icon inset. Negative values reduce inset, positive makes them bigger.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -533,30 +533,68 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string></string>
+			<key>label</key>
+			<string>Tweak created by:</string>
 		</dict>
 		<dict>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
-			<string>PSTextCell</string>
+			<string>PSTitleValueCell</string>
+			<key>height</key>
+			<integer>29</integer>
+			<key>icon</key>
+			<string>i0s_tweak3r.png</string>
 			<key>label</key>
-			<string>Made by i0s_tweak3r.</string>
+			<string>i0s_tweak3r</string>
 		</dict>
 		<dict>
 			<key>action</key>
 			<string>twitter</string>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
 			<string>PSButtonCell</string>
 			<key>icon</key>
 			<string>twitter.png</string>
 			<key>label</key>
-			<string>Follow me on twitter</string>
+			<string>@BrianVS</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Settings improved by:</string>
+		</dict>
+		<dict>
+			<key>alignment</key>
+			<integer>2</integer>
+			<key>cell</key>
+			<string>PSTitleValueCell</string>
+			<key>height</key>
+			<integer>29</integer>
+			<key>icon</key>
+			<string>IndieDevKB.png</string>
+			<key>label</key>
+			<string>IndieDevKB</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>indieDevTwitter</string>
+			<key>alignment</key>
+			<integer>2</integer>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>icon</key>
+			<string>twitter.png</string>
+			<key>label</key>
+			<string>@IndieDevKB</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>My GF is fighting to stay alive after 5 years of battling cancer. Donations are more then appreciated, they motivate me to continue developing free tweaks.</string>
+			<string>The love of my life is fighting stage 4 lymphoma that spread to the lungs recently. Any donations would be greatly appreciated to help with medical bills.</string>
 		</dict>
 		<dict>
 			<key>action</key>
@@ -567,6 +605,18 @@
 			<string>Paypal@2x.png</string>
 			<key>label</key>
 			<string>Donations much appreciated</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTextCell</string>
+			<key>label</key>
+			<string>More improvements coming soon.</string>
 		</dict>
 	</array>
 	<key>title</key>
