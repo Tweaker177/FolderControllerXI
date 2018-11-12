@@ -1,5 +1,6 @@
 #import <spawn.h>
 #import <objc/runtime.h>
+#import <Preferences/Preferences.h>
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 #import <Preferences/PSTableCell.h>
@@ -12,11 +13,11 @@
 
 
 @end
-
+/*
 @interface PSControlTableCell : PSTableCell
 - (UIControl *)control;
 @end
-
+*/
 @interface PSSwitchTableCell : PSControlTableCell
 - (id)initWithStyle:(int)style reuseIdentifier:(id)identifier specifier:(id)specifier;
 @end
@@ -68,6 +69,15 @@ if (self) {
     }
 }
 
+- (void)indieDevTwitter {
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://user?screen_name=indiedevkb"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter://user?screen_name=indiedevkb"]];
+    } else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot:///user_profile/indiedevkb"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tweetbot:///user_profile/indiedevkb"]];
+    }  else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/indiedevkb"]];
+    }
+}
 
 - (void)Paypal
 {
