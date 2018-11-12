@@ -1,6 +1,6 @@
 #import <spawn.h>
 #import <objc/runtime.h>
-#import <Preferences/Preferences.h>
+
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 #import <Preferences/PSTableCell.h>
@@ -9,15 +9,16 @@
 
 -(void)respring:(id)sender;
 -(void)twitter;
+- (void)indieDevTwitter;
 -(void)Paypal;
 
 
 @end
-/*
+
 @interface PSControlTableCell : PSTableCell
 - (UIControl *)control;
 @end
-*/
+
 @interface PSSwitchTableCell : PSControlTableCell
 - (id)initWithStyle:(int)style reuseIdentifier:(id)identifier specifier:(id)specifier;
 @end
