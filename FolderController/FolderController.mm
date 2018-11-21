@@ -1,6 +1,6 @@
-#import <Preferences/Preferences.h>
 #import <spawn.h>
 #import <objc/runtime.h>
+
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 #import <Preferences/PSTableCell.h>
@@ -9,15 +9,16 @@
 
 -(void)respring:(id)sender;
 -(void)twitter;
+- (void)indieDevTwitter;
 -(void)Paypal;
 
 
 @end
-/*
+
 @interface PSControlTableCell : PSTableCell
 - (UIControl *)control;
 @end
-*/
+
 @interface PSSwitchTableCell : PSControlTableCell
 - (id)initWithStyle:(int)style reuseIdentifier:(id)identifier specifier:(id)specifier;
 @end
@@ -47,14 +48,14 @@ if (self) {
 @implementation FolderControllerListController
 - (id)specifiers {
 	if(_specifiers == nil) {
-		_specifiers = [[self loadSpecifiersFromPlistName:@"FolderController" target:self] retain];
+		_specifiers = [self loadSpecifiersFromPlistName:@"FolderController" target:self];
 	}
 	return _specifiers;
 }
 
 - (void)respring:(id)sender {
 	pid_t pid;
-    const char* args[] = {"killall", "SpringBoard", NULL};
+    const char* args[] = {"killall", "backboardd", NULL};
     posix_spawn(&pid, "/usr/bin/killall", NULL, NULL, (char* const*)args, NULL);
 }
 
@@ -69,6 +70,15 @@ if (self) {
     }
 }
 
+- (void)indieDevTwitter {
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://user?screen_name=indiedevkb"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"twitter://user?screen_name=indiedevkb"]];
+    } else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot:///user_profile/indiedevkb"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tweetbot:///user_profile/indiedevkb"]];
+    }  else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/indiedevkb"]];
+    }
+}
 
 - (void)Paypal
 {
