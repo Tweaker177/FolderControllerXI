@@ -48,29 +48,9 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable to adjust how transparent folders look once opened.  </string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>cellClass</key>
-			<string>SRSwitchTableCell</string>
-			<key>default</key>
-			<false/>
-			<key>defaults</key>
-			<string>com.i0stweak3r.foldercontroller</string>
-			<key>key</key>
-			<string>floatyOpacityEnabled</string>
+			<string>Adjust opacity or translucency of open folder backgrounds . Zero hides folder backgrounds completely.</string>
 			<key>label</key>
-			<string>Adjust open folder opacity</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Adjust opacity of background of open folders.</string>
+			<string>Open folder opacity.</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -94,7 +74,9 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Enable to change opacity of closed folders, how they appear as icons. Respring needed to take affect.</string>
+			<string>Colors open folders, and can pick custom color for border.</string>
+			<key>label</key>
+			<string>Open folder coloring</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -108,85 +90,57 @@
 			<key>defaults</key>
 			<string>com.i0stweak3r.foldercontroller</string>
 			<key>key</key>
-			<string>folderIconOpacityEnabled</string>
+			<string>colorFolders</string>
 			<key>label</key>
-			<string> Closed folder opacity</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Adjust white alpha of  folder icons.</string>
+			<string>Enable colored folders</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
 			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>default</key>
-			<real>70</real>
-			<key>defaults</key>
-			<string>com.i0stweak3r.foldercontroller</string>
-			<key>key</key>
-			<string>folderIconOpacityWhite</string>
-			<key>max</key>
-			<integer>100</integer>
-			<key>min</key>
-			<integer>0</integer>
-			<key>showValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Adjust color alpha of folder icons.</string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>default</key>
-			<real>70</real>
-			<key>defaults</key>
-			<string>com.i0stweak3r.foldercontroller</string>
-			<key>key</key>
-			<string>folderIconOpacityColor</string>
-			<key>max</key>
-			<integer>100</integer>
-			<key>min</key>
-			<integer>0</integer>
-			<key>showValue</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Enable to change corner radius of folders. Respring needed to take affect for folder icons. NOTE: closed folder radius changes do not work if using Snowboard. </string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
-			<key>cell</key>
-			<string>PSSwitchCell</string>
-			<key>cellClass</key>
-			<string>SRSwitchTableCell</string>
-			<key>default</key>
+			<key>alpha</key>
 			<false/>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>CSColorDisplayCell</string>
 			<key>defaults</key>
 			<string>com.i0stweak3r.foldercontroller</string>
+			<key>defaultsPath</key>
+			<string>/Library/PreferenceBundles/Stylish11.bundle</string>
+			<key>fallback</key>
+			<string>FFFFFF</string>
 			<key>key</key>
-			<string>iconCornerRadiusEnabled</string>
+			<string>openFolderColorHex</string>
 			<key>label</key>
-			<string>Custom corner radiuses</string>
+			<string>Folder color:</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>alpha</key>
+			<false/>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>CSColorDisplayCell</string>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>defaultsPath</key>
+			<string>/Library/PreferenceBundles/Stylish11.bundle</string>
+			<key>fallback</key>
+			<string>000000</string>
+			<key>key</key>
+			<string>borderColorHex</string>
+			<key>label</key>
+			<string>Border color:</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Adjust closed folders (folder icons) corner radius from 0 being squared and 28-30 being circular. (Doesn’t work if using Snowboard theme engine.)</string>
+			<string></string>
+			<key>label</key>
+			<string>Border thickness:</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -194,47 +148,27 @@
 			<key>cell</key>
 			<string>PSSliderCell</string>
 			<key>default</key>
-			<real>10</real>
+			<real>0.0</real>
 			<key>defaults</key>
 			<string>com.i0stweak3r.foldercontroller</string>
 			<key>key</key>
-			<string>iconCornerRadius</string>
+			<string>customBorderWidth</string>
 			<key>max</key>
-			<integer>30</integer>
+			<integer>10</integer>
 			<key>min</key>
 			<integer>0</integer>
 			<key>showValue</key>
 			<true/>
 		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Adjust corner radius for open folder backgrounds. iOS 11 ONLY feature. Will add lower versions soon.</string>
-		</dict>
-		<dict>
-			<key>PostNotification</key>
-			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
-			<key>cell</key>
-			<string>PSSliderCell</string>
-			<key>default</key>
-			<real>38</real>
-			<key>defaults</key>
-			<string>com.i0stweak3r.foldercontroller</string>
-			<key>key</key>
-			<string>backgroundFolderRadius</string>
-			<key>max</key>
-			<integer>80</integer>
-			<key>min</key>
-			<integer>0</integer>
-			<key>showValue</key>
-			<true/>
-		</dict>
+
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
 			<string>Options for how to close folders. Tap allows you to tap anywhere, pinch to close uses pinch gesture outside of folder to close it. (Pinch requires respring)</string>
+			<key>label</key>
+			<string>Closing Folders</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -273,6 +207,8 @@
 			<string>PSGroupCell</string>
 			<key>footerText</key>
 			<string>Options to adjust appearance of title and the home screen blur/ background behind an open folder. No resprings needed.</string>
+			<key>label</key>
+			<string>Open Folder Options</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -321,6 +257,237 @@
 			<string>reducedTransOn</string>
 			<key>label</key>
 			<string>Dark background (iOS 11)</string>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+	<string>Enable to change opacity of closed folders, how they appear as icons. If corner radius is set higher then standard folder (around 13.5) the corners of it will show unless you turn the opacity down. *Respring needed to take affect.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>SRSwitchTableCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>folderIconOpacityEnabled</string>
+			<key>label</key>
+			<string>Closed folder opacity</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjust white alpha of  folder icons.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>70</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>folderIconOpacityWhite</string>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjust color alpha of  folder icons.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>70</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>folderIconOpacityColor</string>
+			<key>max</key>
+			<integer>100</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Custom color folder icons, pick custom border colors and thickness.</string>
+			<key>label</key>
+			<string>Closed folder coloring</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>SRSwitchTableCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>colorIcons</string>
+			<key>label</key>
+			<string>Enable colored icons</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>alpha</key>
+			<false/>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>CSColorDisplayCell</string>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>defaultsPath</key>
+			<string>/Library/PreferenceBundles/Stylish11.bundle</string>
+			<key>fallback</key>
+			<string>FFFFFF</string>
+			<key>key</key>
+			<string>iconHex</string>
+			<key>label</key>
+			<string>Folder icon color:</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>alpha</key>
+			<false/>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>cellClass</key>
+			<string>CSColorDisplayCell</string>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>defaultsPath</key>
+			<string>/Library/PreferenceBundles/Stylish11.bundle</string>
+			<key>fallback</key>
+			<string>000000</string>
+			<key>key</key>
+			<string>borderHex</string>
+			<key>label</key>
+			<string>Icon border color:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string></string>
+			<key>label</key>
+			<string>Border thickness:</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.0</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>borderWidth</string>
+			<key>max</key>
+			<integer>5</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Enable to change corner radius of open and closed folders. Respring needed to take affect for folder icons.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>cellClass</key>
+			<string>SRSwitchTableCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>iconCornerRadiusEnabled</string>
+			<key>label</key>
+			<string>Custom corner radiuses</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjust closed folders (folder icons) corner radius from 0 being squared and 28-30 being circular.</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>10</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>iconCornerRadius</string>
+			<key>max</key>
+			<integer>30</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Adjust corner radius for open folder backgrounds. (iOS 10.3+higher)</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>38</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>backgroundFolderRadius</string>
+			<key>max</key>
+			<integer>80</integer>
+			<key>min</key>
+			<integer>0</integer>
+			<key>showValue</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -400,7 +567,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-			<string>Allows use of sliders to tweak insets inside open folders. (Relative to original insets for layout)</string>
+			<string>Allows use of sliders to tweak insets of open folders. (Relative to the edges and between apps)</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -594,7 +761,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>footerText</key>
-		<string>If you fimd this tweak useful, please consider a donation. It took a long time and effort to make.</string>
+			<string>The love of my life is fighting stage 4 lymphoma. Any donations would be greatly appreciated to help with medical bills.</string>
 		</dict>
 		<dict>
 			<key>action</key>

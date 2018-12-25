@@ -8,6 +8,7 @@ FolderController_FILES = FolderController.mm
 FolderController_INSTALL_PATH = /Library/PreferenceBundles
 FolderController_FRAMEWORKS = UIKit
 FolderController_PRIVATE_FRAMEWORKS = Preferences
+FolderController_LDFLAGS += -lCSColorPicker
 
 FolderController_CFLAGS = -fobjc-arc
 

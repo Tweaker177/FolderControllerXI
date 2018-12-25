@@ -1,15 +1,17 @@
 #import <spawn.h>
 #import <objc/runtime.h>
-
+/*
+#import <Preferences/Preferences.h>
+*/
 #import <Preferences/PSListController.h>
 #import <Preferences/PSSpecifier.h>
 #import <Preferences/PSTableCell.h>
+#include <CSColorPicker/CSColorPicker.h>
 
 @interface FolderControllerListController: PSListController 
 
 -(void)respring:(id)sender;
 -(void)twitter;
-- (void)indieDevTwitter;
 -(void)Paypal;
 
 
@@ -52,6 +54,19 @@ if (self) {
 	}
 	return _specifiers;
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+
+[self reload];
+
+[super viewWillAppear:animated];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+[super viewDidAppear:animated];
+}
+//end of new
+
 
 - (void)respring:(id)sender {
 	pid_t pid;
