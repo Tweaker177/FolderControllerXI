@@ -1,9 +1,10 @@
 #define PLIST_PATH                                                             \
 @"/var/mobile/Library/Preferences/com.i0stweak3r.foldercontroller.plist"
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import <objc/runtime.h>
+#include <CSColorPicker/CSColorPicker.h>
 
 static CGFloat kFloatyOpacity;
 static bool kEnabled = YES;
@@ -17,10 +18,10 @@ static bool kWantsTapToClose = YES;
 static bool kWantsPinchToClose = YES;
 static bool kWantsNested = YES;
 static CGFloat kBackgroundFolderRadius = 35.f;
-static bool kPlainFX = YES;
-static bool kNoFX = YES;
 
-static bool kReducedTransOn = YES;
+static bool kNoFX = YES; //no blur open folders
+
+static bool kReducedTransOn = YES; //dark bg
 static double kCustomRows = 3.f;
 static double kCustomColumns = 3.f;
 static bool kWantsCustomInsets = YES;
@@ -28,75 +29,57 @@ static double kTopInset = 0.f;
 static double kBottomInset = 0.f;
 static double kSideInset = 0.f;
 static bool kCustomLayout = YES;
-static bool kHidesTitle = YES;
+static bool kHidesTitle= YES;
+/** not implemented yet
+static bool kFullPage = YES;
+static bool kHidePageDots = YES;
+**/
+static bool kColorFolders = YES;
+static NSString *kOpenFolderColorHex =
+@"FFFFFF";
+static NSString *kBorderColorHex= @"000000";
+static CGFloat kCustomBorderWidth = 0;
+//closed folders or icons below
+static NSString *kIconHex  = @"FFFFFF";
+static NSString *kBorderHex = @"FFFFFF";
+static CGFloat kBorderWidth = 0;
+static bool kColorIcons = YES;
 
-@interface 
+@interface SBFolderIconImageView : UIView 
+@end
+//Allows access to all inherited properties of UIViews
 
-/* new methods in iOS 10 that I think blocks nested folders */
+@interface SBFolderBackgroundView : UIView
+@end
 
-%hook SBIconLayoutOverrideStrategy
-- (bool)preservesCurrentListOrigin {
-    if ((kEnabled) && (kWantsNested)) {
-        return 1;
-    }
-    return %orig;
+%hook SBFolderBackgroundView
+-(id)initWithFrame:(CGRect)frame {
+if(kEnabled && kColorFolders) {
+%orig;
+self.backgroundColor = [UIColor colorFromHexString:kOpenFolderColorHex];
+
+self.layer.borderColor = [UIColor colorFromHexString:kBorderColorHex].CGColor;
+self.layer.borderWidth= kCustomBorderWidth;
+self.layer.cornerRadius = kBackgroundFolderRadius;
+self.layer.backgroundColor = [UIColor colorFromHexString:kOpenFolderColorHex].CGColor;
+return self;
+}
+return %orig;
 }
 
-- (id)initWithLayoutInsets:(UIEdgeInsets)arg1
-perservingCurrentListOrigin:(bool)arg2 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg2 = 1;
-        return %orig(arg1, arg2);
-    }
-    return %orig;
+-(void)_setContinuousCornerRadius:(CGFloat)arg1 {
+if(kWantsCornerRadius) {
+arg1= kBackgroundFolderRadius;
+return %orig(arg1);
 }
-%end
-
-%hook SBIconController
-- (bool)allowsNestedFolders {
-    if ((kEnabled) && (kWantsNested)) {
-        return YES;
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconListView
-- (void)updateEditingStateAnimated : (bool)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = 0;
-        return %orig;
-    }
-    return %orig;
-}
-
-- (void)_sendLayoutDelegateWouldHaveMovedIcon:(id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = nil;
-        %orig(arg1);
-    }
-    %orig;
-}
-
-- (bool)allowsAddingIconCount:(unsigned long long)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        return 1;
-        %orig;
-    } else {
-        return %orig;
-    }
+return %orig;
 }
 %end
-/** Just added ***/
+/** more folder background stuff not used yet
+-(BOOL)_shouldUseDarkBackground
++(CGSize)folderBackgroundSize 
+**/
 
-%hook SBFolderController
-- (bool)canAcceptFolderIconDrags {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return %orig;
-}
-%end
 
 %hook SBFolderSettings
 -(bool)allowNestedFolders {
@@ -123,8 +106,9 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 %end
 
-/* This method changes corner radius of folder icons, but SNOWBOARD
- tweak and theme engine makes it not work. works with ANEMONE still. */
+/* This method changes corner radius of folder icons, but Snowboard
+ tweak and theme engine makes it not work. works with Anemone tho.
+*/
 
 %hook SBIconImageView
 +(double)cornerRadius {
@@ -134,6 +118,26 @@ perservingCurrentListOrigin:(bool)arg2 {
     return %orig;
 }
 
+%end
+
+/*
+Changing FolderIconImageView radius at layer level works around Snowboard conflict 
+*/
+%hook SBFolderIconImageView
+-(id)initWithFrame:(CGRect)frame {
+%orig;
+ if ((kEnabled) && (kWantsCornerRadius)) {
+self.layer.cornerRadius = kIconCornerRadius;
+}
+ if ((kEnabled) && (kColorIcons)) {
+
+self.layer.borderWidth = kBorderWidth;
+self.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+self.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
+return self;
+}
+return self;
+}
 %end
 
 %hook SBFolderView
@@ -156,15 +160,16 @@ perservingCurrentListOrigin:(bool)arg2 {
 /*******
  FROM runtime header, this fixes bug where folder splits to multiple
  folders in landscape and loses dark BG. Keeps scrolling as the way to see next
- page. ******/
+ page. 
+**********/
  
  -(bool)_shouldConvertToMultipleIconListsInLandscapeOrientation {
- if(kEnabled) {
+if(kEnabled) {
  return NO;
  }
  return %orig;
- }
- 
+}
+
 - (bool)_tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
     if ((kEnabled) && (kWantsTapToClose)) {
         return YES;
@@ -175,7 +180,7 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 - (void)setBackgroundAlpha:(CGFloat)arg1 {
     if ((kEnabled) && (kFloatyOpacityEnabled)) {
-        arg1 = kFloatyOpacity / 100;
+        arg1 = (kFloatyOpacity / 100);
         return %orig(arg1);
     }
     return %orig;
@@ -193,49 +198,27 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 - (bool)isReduceTransparencyEnabled {
     if ((kEnabled) && (kReducedTransOn)) {
-        return TRUE;
+        return 1;
         // makes backgroundViews darker
-    }
-    return %orig;
+}
+     return %orig;
 }
 
+
 - (void)setEffectActive:(bool)arg1 {
+
     if ((kEnabled) && (kNoFX)) {
         arg1 = FALSE;
-        return %orig(arg1);
-    }
-    return %orig;
+
+return %orig(arg1);
+}
+    return %orig; 
 }
 %end
 
-/** NOT USING AT LEAST YET
- -(NSUInteger) currentEffect {
- if((kEnabled)&&(kPlainFX)) {
- //learned conversion credit to stack exchange
- NSNumber *iAmNumber=@0;
- NSUInteger iAmUnsigned = [iAmNumber unsignedIntegerValue];
- 
- return iAmUnsigned;
- 
- }
- else if((kEnabled)&&(kUnknownFX)) {
- NSNumber *iAmNumber=@2;
- NSUInteger iAmUnsigned = [iAmNumber unsignedIntegerValue];
- 
- return iAmUnsigned;
- 
- }
- else { return %orig; }
- }
- //%orig = 1
- //NSUInt
- 
- %end
- **/
-// Playing with FX
 
 %hook SBFolderBackgroundView
--(void)_setContinuousCornerRadius : (CGFloat)arg1 {
++(void)_setContinuousCornerRadius : (CGFloat)arg1 {
     if ((kEnabled) && (kWantsCornerRadius)) {
         arg1 = kBackgroundFolderRadius;
         return %orig(arg1);
@@ -262,7 +245,7 @@ perservingCurrentListOrigin:(bool)arg2 {
 
 - (double)colorAlpha {
     if ((kEnabled) && (kFolderIconOpacityEnabled)) {
-        return kFolderIconOpacityColor / 100;
+        return (kFolderIconOpacityColor / 100);
     }
     return %orig;
 }
@@ -284,6 +267,69 @@ perservingCurrentListOrigin:(bool)arg2 {
     return %orig;
 }
 %end
+
+%hook SBFolderIconListView
++(unsigned long long)maxVisibleIconRowsInterfaceOrientation
+: (long long)arg1 {
+    if ((kEnabled) && (kCustomLayout)) {
+        %orig;
+        return kCustomRows;
+    }
+    
+    return %orig;
+}
+
+%end
+
+%hook SBFolderIconListView
++(unsigned long long)iconColumnsForInterfaceOrientation : (long long)arg1 {
+    
+    if ((kEnabled) && (kCustomLayout)) {
+        
+        %orig;
+        return kCustomColumns;
+    }
+    
+    return %orig;
+}
+%end
+
+/**  
+Custom inset tweaking relative to original insets determined by number of icons per row or column **/
+%hook SBFolderIconListView
+-(double)bottomIconInset {
+    if ((kEnabled) && (kWantsCustomInsets)) {
+        double IconInset = %orig;
+        IconInset = IconInset - (IconInset * kBottomInset);
+        return IconInset;
+    }
+    return %orig;
+}
+%end
+
+%hook SBFolderIconListView
+-(double)sideIconInset {
+    if ((kEnabled) && (kWantsCustomInsets)) {
+        double IconInset = %orig;
+        IconInset = IconInset - (IconInset * kSideInset);
+        return IconInset;
+    }
+    return %orig;
+}
+%end
+
+%hook SBFolderIconListView
+-(double)topIconInset {
+    if ((kEnabled) && (kWantsCustomInsets)) {
+        double IconInset = %orig;
+        IconInset = IconInset - (IconInset * kTopInset);
+        return IconInset;
+    }
+    return %orig;
+}
+%end
+
+//more nested folder educated guesswork 
 
 %hook SBApplicationPlaceholder
 -(bool)iconAllowsLaunch : (id)arg1 {
@@ -326,7 +372,7 @@ perservingCurrentListOrigin:(bool)arg2 {
 %end
 
 %hook SBIconListModel
--(bool)allowsAddingIcon : (id)arg1 {
+-(bool)allowsAddingIcon:(id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         %orig;
         return TRUE;
@@ -336,7 +382,7 @@ perservingCurrentListOrigin:(bool)arg2 {
 %end
 
 %hook SBStarkIconListModel
--(bool)allowsAddingIcon : (id)arg1 {
+-(bool)allowsAddingIcon:(id)arg1 {
     
     if ((kEnabled) && (kWantsNested)) {
         %orig;
@@ -347,7 +393,7 @@ perservingCurrentListOrigin:(bool)arg2 {
 %end
 
 %hook SBIconModel
--(void)setAllowsSaving : (bool)arg1 {
+-(void)setAllowsSaving:(bool)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         arg1 = TRUE;
         return %orig(arg1);
@@ -442,7 +488,7 @@ perservingCurrentListOrigin:(bool)arg2 {
 %end
 
 %hook SBIconListModel
--(bool)addIcon : (id)arg1 {
+-(bool)addIcon:(id)arg1 {
     if ((kEnabled) && (kWantsNested)) {
         %orig;
         return TRUE;
@@ -451,66 +497,72 @@ perservingCurrentListOrigin:(bool)arg2 {
 }
 %end
 
-%hook SBFolderIconListView
-+(unsigned long long)maxVisibleIconRowsInterfaceOrientation
-: (long long)arg1 {
-    if ((kEnabled) && (kCustomLayout)) {
+/* new methods in iOS 10 that I think blocks nested folders */
+
+%hook SBIconLayoutOverrideStrategy
+- (bool)preservesCurrentListOrigin {
+    if ((kEnabled) && (kWantsNested)) {
+        return 1;
+    }
+    return %orig;
+}
+
+- (id)initWithLayoutInsets:(UIEdgeInsets)arg1
+perservingCurrentListOrigin:(bool)arg2 {
+    if ((kEnabled) && (kWantsNested)) {
+        arg2 = 1;
+        return %orig(arg1, arg2);
+    }
+    return %orig;
+}
+%end
+
+%hook SBIconController
+- (bool)allowsNestedFolders {
+    if ((kEnabled) && (kWantsNested)) {
+        return YES;
+    }
+    return %orig;
+}
+%end
+
+%hook SBIconListView
+- (void)updateEditingStateAnimated : (bool)arg1 {
+    if ((kEnabled) && (kWantsNested)) {
+        arg1 = 0;
+        return %orig;
+    }
+    return %orig;
+}
+
+- (void)_sendLayoutDelegateWouldHaveMovedIcon:(id)arg1 {
+    if ((kEnabled) && (kWantsNested)) {
+        arg1 = nil;
+        %orig(arg1);
+    }
+    %orig;
+}
+
+- (bool)allowsAddingIconCount:(unsigned long long)arg1 {
+    if ((kEnabled) && (kWantsNested)) {
+        return 1;
         %orig;
-        return kCustomRows;
+    } else {
+        return %orig;
     }
-    
-    return %orig;
-}
-
-%end
-
-%hook SBFolderIconListView
-+(unsigned long long)iconColumnsForInterfaceOrientation : (long long)arg1 {
-    
-    if ((kEnabled) && (kCustomLayout)) {
-        
-        %orig;
-        return kCustomColumns;
-    }
-    
-    return %orig;
 }
 %end
 
-/**  Custom inset tweaking relative to original insets determined by
- number of icons per row or column **/
-%hook SBFolderIconListView
--(double)bottomIconInset {
-    if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = %orig;
-        IconInset = IconInset - (IconInset * kBottomInset);
-        return IconInset;
+%hook SBFolderController
+- (bool)canAcceptFolderIconDrags {
+    if ((kEnabled) && (kWantsNested)) {
+        return TRUE;
     }
     return %orig;
 }
 %end
 
-%hook SBFolderIconListView
--(double)sideIconInset {
-    if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = %orig;
-        IconInset = IconInset - (IconInset * kSideInset);
-        return IconInset;
-    }
-    return %orig;
-}
-%end
-
-%hook SBFolderIconListView
--(double)topIconInset {
-    if ((kEnabled) && (kWantsCustomInsets)) {
-        double IconInset = %orig;
-        IconInset = IconInset - (IconInset * kTopInset);
-        return IconInset;
-    }
-    return %orig;
-}
-%end
+//Handle prefs with user defaults
 
 static void
 loadPrefs() {
@@ -563,15 +615,25 @@ loadPrefs() {
     kBottomInset = [[prefs objectForKey:@"bottomInset"] floatValue];
     
     kWantsNested = [prefs boolForKey:@"wantsNested"];
-    
-    kPlainFX = [prefs boolForKey:@"plainFX"];
-    /*
-     kUnknownFX= ([prefs objectForKey:@"UnknownFX"] ? [[prefs
-     objectForKey:@"UnknownFX"] boolValue] : NO);
-     ///
-     //plainFX is same as making inactive, havent tested unknown was curious
-     //neither plainFX OR unknownFx are in prefs
-     */
+//NEW STUFF ADDED
+
+kColorFolders = [prefs boolForKey:@"colorFolders"];
+
+kOpenFolderColorHex =    [[prefs objectForKey:@"openFolderColorHex"] stringValue];
+
+kBorderColorHex =  [[prefs objectForKey:@"borderColorHex"] stringValue];
+
+kCustomBorderWidth = [[prefs objectForKey:@"customBorderWidth"] floatValue];
+
+kIconHex = [[prefs objectForKey:@"iconHex"] stringValue];
+
+kBorderHex =  [[prefs objectForKey:@"borderHex"] stringValue];
+
+kBorderWidth = [[prefs objectForKey:@"borderWidth"] floatValue];
+
+kColorIcons =  [prefs boolForKey:@"colorIcons"];
+
+  
 }
 
 %ctor {
