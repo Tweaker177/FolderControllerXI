@@ -30,6 +30,8 @@ static double kSideInset = 0.f;
 static bool kCustomLayout = YES;
 static bool kHidesTitle = YES;
 
+@interface 
+
 /* new methods in iOS 10 that I think blocks nested folders */
 
 %hook SBIconLayoutOverrideStrategy
