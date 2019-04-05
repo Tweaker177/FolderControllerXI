@@ -1,154 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>Adjust closed folders (folder icons) corner radius from 0 being squared and 28-30 being circular.</key>
-	<string>ضبط وتعديل شكل الأيقونات من الخارج (أيقونات المجلد) وضبط الزوايا للمجلد من 0 مربع ومن 28-30 دائري.</string>
-	<key>Adjust color alpha of uncolored folder icons, the image that appears behind rounded, custom colored folders.</key>
-	<string>ضبط الشفافية لرموز المجلدات غير الملونة ، والصورة التي تظهر خلف مجلدات منحنية ومخصصة.</string>
-	<key>Adjust corner radius for open folder backgrounds.</key>
-	<string>ضبط انحناء الزوايا لخلفية المجلدات المفتوحة.</string>
-	<key>Adjust opacity or translucency of open folder backgrounds . Zero hides folder backgrounds completely.</key>
-	<string>ضبط التعتيم أو الشفافية لخلفية المجلد ( عند ضبط الرقم الى الصفر يتم اخفاء خلفية المجلد تماما ) .</string>
-	<key>Adjust slider to set custom max number of rows inside open folders.</key>
-	<string>اضبط شريط التمرير لتعيين الحد الأقصى لعدد الصفوف داخل المجلدات.</string>
-	<key>Adjust white alpha of uncolored folder icons. Leave both at zero to see only custom color and corner radius changes (if you use Snowboard). Thats a workaround for corner radius conflict with the theme engine.</key>
-	<string>قم بضبط لون الشفافية الأبيض للمجلدات غير الملونة. اترك كلاهما عند الصفر لرؤية لون مخصص و تغيير لون حدود المجلد (إذا كنت تستخدم Snowboard). هذا حل لتفادي التعارض مع محرك الثيمات.</string>
-	<key>Adjusts bottom icon inset. Negative values reduce inset, positive makes them bigger.</key>
-	<string>ضبط المسافة السفلية للايقونات. القيمة السلبية تقلل الشكل الداخلي ، والإيجابية تجعلها أكبر.</string>
-	<key>Adjusts side icon insets. Negative values reduce insets, positive make them bigger.</key>
-	<string>ضبط المسافة الجانبية. القيم السلبية تصغر الشكل الداخلي ، والقيم الايجابية تجعلها أكبر.</string>
-	<key>Adjusts top icon inset. Negative values reduce inset, positive make them bigger.</key>
-	<string>ضبط المسافة العلوية. القيم السلبية تصغر الشكل الداخلي ، والإيجابية تجعلها أكبر.</string>
-	<key>Allows use of sliders to tweak insets of open folders. (Relative to the edges and between apps)</key>
-	<string>استخدم اشرطة التمرير لتعديل إدراجات المجلدات المفتوحة. (نسبة إلى الحواف وبين التطبيقات)</string>
-	<key>Allows you to use folders as part of the multi-icon select to rearrange your homescreen faster. In editing mode, drag down and hold one icon, then tap others for multi-select.</key>
-	<string>يسمح لك بنقل  أكثر من مجلد بشكل متعدد لتحديدها وإعادة ترتيب الشاشة الرئيسية بشكل أسرع. في وضع التحرير ، اسحب ملف واحد لأسفل مع الاستمرار ، ثم انقر فوق الآخرين.</string>
-	<key>Anything larger then zero enables the colored border for open folders, assuming one of the color switches are enabled.</key>
-	<string>أي قيمة أكبر من صفر تفعل الحدود الملونة للمجلدات المفتوحة ، يجب تمكين أحد مفاتيح الألوان.</string>
-	<key>Apply changes</key>
-	<string>تطبيق الإعدادات</string>
-	<key>Auto-close when app opens</key>
-	<string>أغلق المجلد عند فتح التطبيق</string>
-	<key>Border color</key>
-	<string>لون الحدود</string>
-	<key>Border color:</key>
-	<string>لون الحدود:</string>
-	<key>Border thickness:</key>
-	<string>تعريض الحدود:</string>
-	<key>Choose one of the several different ways your three colors will be blended. If varied button is on it will be random each time folder is opened.</key>
-	<string>اختر واح من عدة طرق مختلفة لمزجّ ألوانك الثلاثة المخصصة. إذا قمت بتفعيل زر اللون العشوائي ، فسيكون اللون عشوائيًا في كل مرة يتم فيها فتح المجلد.</string>
-	<key>Choose open folder size from the segment cell picker- normal (default), full width large square, or nearly full page. Make sure the tap to close feature is on for easy closing of full page folders. Theres room if you forget though.</key>
-	<string>اختر حجم المجلد من الشريط  (افتراضي) ، أو عرض المجلد بصفحة كاملة تقريباً. تأكد من  ميزة (اضغط للقفل) قيد التشغيل لسهولة إغلاق مجلدات الصفحة الكاملة.</string>
-	<key>Closed folder coloring</key>
-	<string>تغيير لون المجلد عند الإغلاق</string>
-	<key>Closed folder opacity</key>
-	<string>تغيير شفافية المجلد المغلق</string>
-	<key>Closing Folders</key>
-	<string>قفل المجلدات</string>
-	<key>Color icons+border</key>
-	<string>تغيير لون حدود الأيقونات</string>
-	<key>Colors open folders with either a solid color and border, a preset gradient blend of 3 colors you pick, or various gradient styles using the colors below. Border color also will appear if width is greater then zero.</key>
-	<string>يمكنك فتح مجلدات بألوان متعددة إما تغيير لون المجلد أو تغيير الحدود بلون مختلف أو مزج عدة ألوان  مسبقًا من ٣ ألوان تختارها ، أو أنماط متدرجة مختلفة باستخدام الألوان أدناه. سيظهر لون الحدود أيضًا إذا كان العرض أكبر من الصفر.</string>
-	<key>Custom color folder icons, and pick custom border color and thickness. Turn on Support theme images if you have a folder icon as part of your theme you want to see. The border color will work still, but leave theme image original color as icon. Also makes tweak compatible for custom icon images.</key>
-	<string>تخصيص لون لأيقونات المجلد الى لون مخصص ، واختيار لون حدود وسمك مخصص. عند التفعيل يتم دعم التخصيص مع محرك الثيمات وسيعمل لون الحدود ، كما يجعل الأيقونات متوافقة مع الثيمات المخصصة.</string>
-	<key>Custom corner radiuses</key>
-	<string>تخصيص انحناء الزوايا </string>
-	<key>Custom folder layouts</key>
-	<string>تخصيص تنسيق المجلد</string>
-	<key>Custom folder sizes</key>
-	<string>تخصيص حجم المجلد</string>
-	<key>Dark background</key>
-	<string>خلفية معتمة</string>
-	<key>Donations much appreciated</key>
-	<string>أقدر لك تبرعك!!</string>
-	<key>Enable custom insets</key>
-	<string>تفعيل الإدراجات المخصصة</string>
-	<key>Enable gradient blend</key>
-	<string>تفعيل مزج التدرج</string>
-	<key>Enable opacity slider:</key>
-	<string>تفعيل شريط التمرير للتعتيم:</string>
-	<key>Enable solid colors</key>
-	<string>تفعيل الألوان الثابتة</string>
-	<key>Enable to change corner radius of open and closed folders. Respring needed to take affect for folder icons.</key>
-	<string>تفعيل تغيير زوايا وحدود المجلدات المفتوحة والمغلقة. (Respring) لتعيين التغييرات.</string>
-	<key>Enable to change opacity of closed folders, how they appear as icons. If corner radius is set higher then standard folder (around 10.0) the corners of it will show unless you turn the opacity down. *Respring needed to take affect for most icon changes.</key>
-	<string>تفعيل لتغيير عتامة المجلدات المغلقة ، وكيف تظهر الأيقونات. إذا تم تعيين حدود الزاويا أعلى من شكل المجلد القياسي (حوالي 10.0) ستظهر أركانه ما لم تقوم بإيقاف تشغيل العتامة. * تحتاج إلى إعادة تشغيل (Respring) للتطبيق التغييرات .</string>
-	<key>Enable tweak</key>
-	<string>تفعيل الأداة</string>
-	<key>Folder color or gradient1:</key>
-	<string>لون المجلد أو التدرج ١:</string>
-	<key>Folder icon color</key>
-	<string>لون أيقونة المجلد</string>
-	<key>FolderControllerXI</key>
-	<string>XI المتحكم بالمجلدات</string>
-	<key>For access to all my free tweaks; add my repo, and check out packages available in BigBoss .</key>
-	<string>للحصول على جميع الادوات المجانية الخاصة بي الرجاء إضافة سورسي الخاص ومشاهدة جميع الأدوات.</string>
-	<key>Free tweaks in BigBoss</key>
-	<string>أدوات مجانية متاحة في بيق بوس.</string>
-	<key>Full Page</key>
-	<string>الصفحة كاملة</string>
-	<key>Full Width</key>
-	<string>العرض بالكامل</string>
-	<key>Gradient color2:</key>
-	<string>لون المجلد أو التدرج ٢:</string>
-	<key>Gradient color3:</key>
-	<string>لون المجلد أو التدرج ٣:</string>
-	<key>Gradient style:</key>
-	<string>شكل التدرج:</string>
-	<key>Hide the minigrid</key>
-	<string>إخفاء الشبكة المصغرة</string>
-	<key>Hide title when folder open</key>
-	<string>إزالة عنوان المجلد عند فتحه</string>
-	<key>IndieDevKB</key>
-	<string>IndieDevKB</string>
-	<key>Keep empty folders</key>
-	<string>حافظ على المجلدات الفارغة</string>
-	<key>More improvements coming soon.</key>
-	<string>المزيد من المزايا و الإصلاحات قادمة لاحقاً.</string>
-	<key>Multi-Folder select</key>
-	<string>تحديد أكثر من مجلد</string>
-	<key>No background effects/blur</key>
-	<string>الغاء التأثيرات/الشفافية في الخلفية </string>
-	<key>Normal</key>
-	<string>طبيعي</string>
-	<key>Open Folder Options</key>
-	<string>فتح إعدادات المجلد</string>
-	<key>Open folder coloring</key>
-	<string>فتح تلوين مجلد</string>
-	<key>Open folder opacity</key>
-	<string>فتح تعتيم المجلد</string>
-	<key>Options for how to close folders. Tap allows you to tap anywhere, pinch to close uses pinch gesture outside of folder to close it. (Pinch requires respring to turn on/off)</key>
-	<string>خيارات لكيفية إغلاق المجلدات. يسمح لك بالضغط من أي مكان للإغلاق يستخدم ميزة (الضغط بشدة) لإغلاقه. (يتطلب إعادة التشغيل (Respring) للتشغيل / إيقاف )</string>
-	<key>Options to adjust appearance of title and the home screen blur/ background behind an open folder. No resprings needed. Open folder colors can be changed without needing respring as well.</key>
-	<string>خيارات لضبط مظهر العنوان والشاشة الرئيسية (الشفافية / الخلفية) في خلف المجلد المفتوح. لا يوجد حاجة إلى Respring. يمكن تغيير ألوان المجلد المفتوح دون الحاجة إلى إعادة Respring كذلك.</string>
-	<key>Pinch to close</key>
-	<string>الضغط بشدة للاغلاق</string>
-	<key>Random gradient styles</key>
-	<string>أنماط تدرج عشوائية</string>
-	<key>Set custom number of columns inside folder.</key>
-	<string>ضبط رقم مخصص للأعمدة داخل المجلد.</string>
-	<key>Set custom number of rows and columns in open folders. Affects all folders. Should update immediately, if not hit "Apply changes".</key>
-	<string>قم بتعيين عدد مخصص من الصفوف والأعمدة في المجلدات المفتوحة. يؤثر على جميع المجلدات. يتم تعيين التطبيق على الفور ، إذا لم يتم النقر على "تطبيق التغييرات".</string>
-	<key>Settings improved by:</key>
-	<string>الاعدادات معدلة من قبل:</string>
-	<key>Show status bar</key>
-	<string>أظهر شريط الحالة</string>
-	<key>Support theme images</key>
-	<string>دعم الأيقونات المخصصة "الثيمات".</string>
-	<key>Tap to close</key>
-	<string>إضغط للقفل</string>
-	<key>Thank you for your purchase. Any additional donations are greatly appreciated, as I will continue to improve the tweak, and provide support for iOS 12.</key>
-	<string>شكراً لك لشرائك! اي تبرعات إضافية تساهم في تطوير الاداة الى إصدار IOS 12</string>
-	<key>Turns on the tweak. Turn off to reset all changes to original values.</key>
-	<string>إعادة تعيين جميع التغييرات إلى القيم الإفتراضية.</string>
-	<key>Tweak created by:</key>
-	<string>تم إنشاء الأداة من قبل:</string>
-	<key>Vary gradient styles</key>
-	<string>تغيير أنماط التدرج</string>
-	<key>i0s_tweak3r</key>
-	<string>i0s_tweak3r</string>
-	<key>👉 Add my repo</key>
-	<string>أضف سورسي الخاص</string>
-</dict>
-</plist>
