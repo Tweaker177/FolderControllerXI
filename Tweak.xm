@@ -138,16 +138,6 @@ return %orig;
 }
 %end
 
-/* Was reducing title size to squeeze in but it isn’t necessary, by default it auto-resizes 
--(CGFloat)_titleFontSize {
-screenWidth = [[UIScreen mainScreen] bounds].size.width;
-if(!kEnabled) { return %orig; }
- if((kFolderSizeSelection == 1) || (kFolderSizeSelection == 2 && screenWidth >= screenHeight)) {
-return 15.f;
-}  else { return %orig; }
-}
-%end
-*****/
 
 %hook SBFolderController
 - (void)_addFakeStatusBarView {
@@ -204,25 +194,9 @@ return %orig;
 +(CGSize)folderBackgroundSize {
 screenHeight = [[UIScreen mainScreen] bounds].size.height;
 screenWidth = [[UIScreen mainScreen] bounds].size.width;
-/*
-if((kEnabled) && (kFolderSizeSelection == 1)&&(screenHeight > screenWidth)) {
-CGSize _folderBackgroundSize = CGSizeMake(302.333, 326.666);
-return _folderBackgroundSize;
-}
-else if((kEnabled) && (kFolderSizeSelection == 1)&&(screenHeight < screenWidth)) {
-CGSize _folderBackgroundSize = CGSizeMake(302.333, 326.666);
-return _folderBackgroundSize;
-}
-*/
+
 if((kEnabled) && (kFolderSizeSelection == 1)) {
-/***
-if (screenWidth > screenHeight) {
-    float tempHeight = screenWidth;
-    screenWidth = screenHeight;
-    screenHeight = tempHeight;
-CGSize folderSize= CGSizeMake(screenWidth,screenHeight);
-}
-***/
+
 CGSize folderSize = CGSizeMake(screenWidth-16.f, screenHeight - 77.f);
 return folderSize;
 }
@@ -245,9 +219,7 @@ SBFolderBackgroundView *view = %orig;
 
 screenHeight = [[UIScreen mainScreen] bounds].size.height;
 screenWidth = [[UIScreen mainScreen] bounds].size.width;
-/*
-UIImageView *backgroundImageView = MSHookIvar<UIImageView *>(self, "_backgroundImageView");
-*/
+
 if((kEnabled) && (kFolderSizeSelection == 0)&&(screenHeight > screenWidth)) {
 CGSize normalSize = [%c(SBFolderBackgroundView)folderBackgroundSize];
 view.frame= CGRectMake (0,0, normalSize.width, normalSize.height);
@@ -280,21 +252,7 @@ if (screenWidth > screenHeight) {
 //room for statusBar in landscape 
 view.frame = CGRectMake(0,0, screenWidth -16.f, screenWidth - 16.f);
 view.bounds = view.frame;
-/**
-if(kWantsOpenBackgroundImage) {
-UIImageView *backgroundImageView = MSHookIvar<UIImageView *>(self, "_backgroundImageView");
-backgroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Library/Application Support/FolderController/FullWidthBackgroundImage.png"]];
 
-backgroundImageView.frame = view.frame;
-
-_backgroundImageView.layer.masksToBounds = YES;
-_backgroundImageView.layer.cornerRadius = [%c(SBFolderBackgroundView) cornerRadiusToInsetContent];
-backgroundImageView.alpha = (view.alpha * 0.65);
-//reducing Opacity to bring out color of gradients 
-
-[view addSubview:backgroundImageView];
-} //end if wants image
-******/
 } //end of If full width folder
 
 if(kEnabled && kFolderGradientsEnabled) {
