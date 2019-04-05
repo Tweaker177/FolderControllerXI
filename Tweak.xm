@@ -71,7 +71,9 @@ static NSString *kIconGradient3Hex =  @"FF0000";
 
 static bool kFolderGradientsEnabled = YES;
 
-static bool kIconGradientsEnabled = YES;
+static bool kIconGradientsEnabled = YES; 
+//Actually is Supports Theme Image Enabled
+
 static bool kMultiItem = YES;
 
 UIImageView* _tintView;
