@@ -47,10 +47,7 @@ static bool kRandomGradientsEnabled = YES;
 static CGFloat screenHeight, screenWidth;
 static bool kWantsNoFolderDelete;
 
-/** Was working on adding Support for theme image from icon to be background for open folder, but had a crash. Will re-visit.
 
-static bool kWantsOpenBackgroundImage = YES;
-**/
 static bool kColorFolders = YES;
 static NSString *kOpenFolderColorHex =
 @"FF0000";
@@ -77,9 +74,6 @@ static bool kIconGradientsEnabled = YES;
 static bool kMultiItem = YES;
 
 UIImageView* _tintView;
-/*
-UIImageView* _backgroundImageView;
-*/
 
 @interface SBFolderIconImageView : UIView 
 @end
@@ -89,9 +83,6 @@ UIImageView* _backgroundImageView;
 
 {
 UIImageView* _tintView;
-/*
-UIImageView* _backgroundImageView;
-*/
 }
 
 +(CGSize)folderBackgroundSize;
@@ -525,13 +516,8 @@ gradientView.layer.borderWidth = kBorderWidth;
 
 /* Didn’t work so removed
 CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = gradientView.bounds;
-    gradient.startPoint = CGPointMake(0.5, 0);
-    gradient.endPoint = CGPointMake(0.5, 1.0);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
-            [gradientView.layer insertSublayer:gradient atIndex:0];
-      [gradientView.layer insertSublayer:gradient atIndex:1];
-*/
+blah blah.... */
+
 return gradientView;
 }
 else if(kEnabled && kWantsCornerRadius) {
@@ -694,7 +680,7 @@ else {
 }
 %end
 
-//Just changed for gradients but didn’t work 
+/* changed for gradient icons but it didn’t work (don't remember if I changed back) */
 
 %hook SBFWallpaperSettings
 -(bool)replaceBlurs {
@@ -733,7 +719,9 @@ else {
 %end
 
 /**  
-Custom inset tweaking relative to original insets determined by number of icons per row or column **/
+Custom inset tweaking relative to original insets determined by number of icons per row or column
+ **/
+
 %hook SBFolderIconListView
 -(double)bottomIconInset {
     if ((kEnabled) && (kWantsCustomInsets)) {
@@ -767,7 +755,7 @@ Custom inset tweaking relative to original insets determined by number of icons 
 }
 %end
 
-
+//Handle Prefs and Set Defaults
 
 static void
 loadPrefs() {
