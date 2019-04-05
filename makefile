@@ -8,7 +8,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = FolderController
 FolderController_FILES = Tweak.xm
-FolderController_FRAMEWORKS = UIKit Foundation
+FolderController_FRAMEWORKS = UIKit Foundation QuartzCore
 FolderController_LDFLAGS += -lCSColorPicker
 FolderController_CFLAGS = -fobjc-arc
 

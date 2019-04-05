@@ -1,13 +1,17 @@
-#define PLIST_PATH                                                             \
-@"/var/mobile/Library/Preferences/com.i0stweak3r.foldercontroller.plist"
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#include <stdlib.h>
 #import <objc/runtime.h>
+#import <QuartzCore/QuartzCore.h>
 #include <CSColorPicker/CSColorPicker.h>
 
+#define PLIST_PATH @"/var/mobile/Library/Preferences/com.i0stweak3r.foldercontroller.plist"
+
+
+static int kGradientStyleSelection = 0;
 static CGFloat kFloatyOpacity;
-static bool kEnabled = YES;
+static bool kEnabled;
 static bool kFloatyOpacityEnabled = YES;
 static bool kFolderIconOpacityEnabled = YES;
 static double kFolderIconOpacityColor;
@@ -16,55 +20,407 @@ static bool kWantsCornerRadius = YES;
 static double kIconCornerRadius;
 static bool kWantsTapToClose = YES;
 static bool kWantsPinchToClose = YES;
-static bool kWantsNested = YES;
+
 static CGFloat kBackgroundFolderRadius = 35.f;
+
+static bool kWantsStatusBarWithFolder = YES;
 
 static bool kNoFX = YES; //no blur open folders
 
 static bool kReducedTransOn = YES; //dark bg
-static double kCustomRows = 3.f;
-static double kCustomColumns = 3.f;
-static bool kWantsCustomInsets = YES;
+
+/* defaults vary for layout of iPad and iPhone, need to address this at some point. Not a big issue though, if used it will be user set and is off by default */
+static double kCustomRows; 
+static double kCustomColumns;
+
+static bool kWantsCustomInsets;
 static double kTopInset = 0.f;
 static double kBottomInset = 0.f;
 static double kSideInset = 0.f;
 static bool kCustomLayout = YES;
-static bool kHidesTitle= YES;
-/** not implemented yet
-static bool kFullPage = YES;
-static bool kHidePageDots = YES;
+static bool kHidesTitle;
+static NSString *kNewBorderColor = @"000000";
+static bool kWantsAutoClose = NO;
+
+static bool kRandomGradientsEnabled = YES;
+
+static CGFloat screenHeight, screenWidth;
+static bool kWantsNoFolderDelete;
+
+/** Was working on adding Support for theme image from icon to be background for open folder, but had a crash. Will re-visit.
+
+static bool kWantsOpenBackgroundImage = YES;
 **/
 static bool kColorFolders = YES;
 static NSString *kOpenFolderColorHex =
-@"FFFFFF";
-static NSString *kBorderColorHex= @"000000";
+@"FF0000";
+static NSString *kBorderColorHex= @"FF0000";
+//actually this is gradient 3 now
+
 static CGFloat kCustomBorderWidth = 0;
 //closed folders or icons below
-static NSString *kIconHex  = @"FFFFFF";
-static NSString *kBorderHex = @"FFFFFF";
-static CGFloat kBorderWidth = 0;
+static NSString *kIconHex  = @"FF0000";
+static NSString *kBorderHex = @"000000";
+static CGFloat kBorderWidth = 0.f;
 static bool kColorIcons = YES;
+static bool kWantsNoMiniGrid = NO;
+
+static int kFolderSizeSelection = 0;
+static NSString *kOpenGradient3Hex = @"000000";
+static NSString *kIconGradient3Hex =  @"FF0000";
+
+static bool kFolderGradientsEnabled = YES;
+
+static bool kIconGradientsEnabled = YES;
+static bool kMultiItem = YES;
+
+UIImageView* _tintView;
+/*
+UIImageView* _backgroundImageView;
+*/
 
 @interface SBFolderIconImageView : UIView 
 @end
 //Allows access to all inherited properties of UIViews
 
 @interface SBFolderBackgroundView : UIView
+
+{
+UIImageView* _tintView;
+/*
+UIImageView* _backgroundImageView;
+*/
+}
+
++(CGSize)folderBackgroundSize;
++(CGFloat)cornerRadiusToInsetContent;
+-(id)initWithFrame:(CGRect)frame;
+-(void)layoutSubviews;
 @end
 
-%hook SBFolderBackgroundView
--(id)initWithFrame:(CGRect)frame {
-if(kEnabled && kColorFolders) {
-%orig;
-self.backgroundColor = [UIColor colorFromHexString:kOpenFolderColorHex];
+@interface SBFolderIconBackgroundView : UIView
+-(id)initWithFrame:(CGRect)frame;
+@end
 
-self.layer.borderColor = [UIColor colorFromHexString:kBorderColorHex].CGColor;
-self.layer.borderWidth= kCustomBorderWidth;
-self.layer.cornerRadius = kBackgroundFolderRadius;
-self.layer.backgroundColor = [UIColor colorFromHexString:kOpenFolderColorHex].CGColor;
+@interface SBFloatyFolderView : UIView
+/* not used, was going to use to adjust title appearance for full page folder and full-width in landscape
+-(CGFloat)_titleVerticleOffsetForOrientation:(NSInteger)arg1;
+
+-(CGFloat)_titleFontSize;
+*/
+@end
+
+
+%hook SBFolder
+-(bool)isEmpty {
+if(kWantsNoFolderDelete) {
+return 0;
+}
+return %orig;
+}
+
+-(bool)shouldRemoveWhenEmpty {
+if(kWantsNoFolderDelete) {
+return 0;
+}
+return %orig;
+}
+%end
+
+%hook SBFolderIcon
+-(BOOL)canBeAddedToMultiItemDrag {
+if(kEnabled && kMultiItem) {
+return 1;
+}
+return %orig;
+}
+%end
+
+/* Was reducing title size to squeeze in but it isn’t necessary, by default it auto-resizes 
+-(CGFloat)_titleFontSize {
+screenWidth = [[UIScreen mainScreen] bounds].size.width;
+if(!kEnabled) { return %orig; }
+ if((kFolderSizeSelection == 1) || (kFolderSizeSelection == 2 && screenWidth >= screenHeight)) {
+return 15.f;
+}  else { return %orig; }
+}
+%end
+*****/
+
+%hook SBFolderController
+- (void)_addFakeStatusBarView {
+if(kEnabled && kWantsStatusBarWithFolder) {
+return;
+}
+return %orig;
+}
+%end
+
+
+%hook SBFolderTitleTextField
+-(id)initWithFrame:(CGRect)frame {
+if(!kEnabled) { return %orig; }
+screenWidth = [[UIScreen mainScreen] bounds].size.width;
+screenHeight = [[UIScreen mainScreen] bounds].size.height;
+
+if((kFolderSizeSelection == 1) || (kFolderSizeSelection == 2 && screenWidth > screenHeight)) {
+
+frame = CGRectMake(0, -20, screenWidth, 16.f);
+
+return %orig(frame);
+}
+return %orig;
+}
+%end
+
+
+%hook SBFloatyFolderView
+-(id)initWithFrame:(CGRect)frame {
+if((kEnabled) && ((kFolderSizeSelection == 1) || (kFolderSizeSelection==2))) {
+self = %orig;
+screenHeight = [[UIScreen mainScreen] bounds].size.height;
+screenWidth = [[UIScreen mainScreen] bounds].size.width;
+self.frame= CGRectMake(0,0,screenWidth,screenHeight);
+self.bounds = 
+CGRectMake(0,0,screenWidth,screenHeight);
 return self;
 }
 return %orig;
+}
+
+-(bool)gestureRecognizer:(id)arg1 shouldRecognizeSimultaneouslyWithGestureRecognizer:(id)arg2 {
+if(kEnabled && kWantsAutoClose) {
+return 1;
+%orig;
+}
+return %orig;
+}
+
+%end
+
+%hook SBFolderBackgroundView
++(CGSize)folderBackgroundSize {
+screenHeight = [[UIScreen mainScreen] bounds].size.height;
+screenWidth = [[UIScreen mainScreen] bounds].size.width;
+/*
+if((kEnabled) && (kFolderSizeSelection == 1)&&(screenHeight > screenWidth)) {
+CGSize _folderBackgroundSize = CGSizeMake(302.333, 326.666);
+return _folderBackgroundSize;
+}
+else if((kEnabled) && (kFolderSizeSelection == 1)&&(screenHeight < screenWidth)) {
+CGSize _folderBackgroundSize = CGSizeMake(302.333, 326.666);
+return _folderBackgroundSize;
+}
+*/
+if((kEnabled) && (kFolderSizeSelection == 1)) {
+/***
+if (screenWidth > screenHeight) {
+    float tempHeight = screenWidth;
+    screenWidth = screenHeight;
+    screenHeight = tempHeight;
+CGSize folderSize= CGSizeMake(screenWidth,screenHeight);
+}
+***/
+CGSize folderSize = CGSizeMake(screenWidth-16.f, screenHeight - 77.f);
+return folderSize;
+}
+else if((kEnabled) && (kFolderSizeSelection == 2)&&(screenHeight > screenWidth)) {
+CGSize folderSizeSquare = CGSizeMake(screenWidth-16.f, screenWidth-16.f);
+return folderSizeSquare;
+}
+else if((kEnabled) && (kFolderSizeSelection == 2)&&(screenHeight < screenWidth)) {
+CGSize folderSizeSquare = CGSizeMake(screenHeight-16.f, screenHeight-16.f);
+return folderSizeSquare;
+}
+else {
+return %orig; }
+}
+
+
+
+-(id)initWithFrame:(CGRect)frame {
+SBFolderBackgroundView *view = %orig;
+
+screenHeight = [[UIScreen mainScreen] bounds].size.height;
+screenWidth = [[UIScreen mainScreen] bounds].size.width;
+/*
+UIImageView *backgroundImageView = MSHookIvar<UIImageView *>(self, "_backgroundImageView");
+*/
+if((kEnabled) && (kFolderSizeSelection == 0)&&(screenHeight > screenWidth)) {
+CGSize normalSize = [%c(SBFolderBackgroundView)folderBackgroundSize];
+view.frame= CGRectMake (0,0, normalSize.width, normalSize.height);
+view.bounds = view.frame;
+
+}
+if((kEnabled) && (kFolderSizeSelection == 0)&&(screenHeight < screenWidth)) {
+CGSize normalSize =
+[%c(SBFolderBackgroundView)folderBackgroundSize];
+view.frame= CGRectMake (0,0, normalSize.width, normalSize.height);
+view.bounds = view.frame;
+
+}
+
+if((kEnabled) && (kFolderSizeSelection == 1)) {
+
+view.frame = CGRectMake(0,0, screenWidth-16.f, screenHeight-77.f);
+view.bounds = view.frame;
+}
+
+
+//Trying to create square folder size of device width
+
+if((kEnabled) && (kFolderSizeSelection == 2)) {
+if (screenWidth > screenHeight) {
+    float tempHeight = screenWidth;
+    screenWidth = screenHeight;
+    screenHeight = tempHeight; 
+}
+//room for statusBar in landscape 
+view.frame = CGRectMake(0,0, screenWidth -16.f, screenWidth - 16.f);
+view.bounds = view.frame;
+/**
+if(kWantsOpenBackgroundImage) {
+UIImageView *backgroundImageView = MSHookIvar<UIImageView *>(self, "_backgroundImageView");
+backgroundImageView = [[UIImageView alloc]initWithImage:[UIImage imageWithContentsOfFile:@"/var/mobile/Library/Application Support/FolderController/FullWidthBackgroundImage.png"]];
+
+backgroundImageView.frame = view.frame;
+
+_backgroundImageView.layer.masksToBounds = YES;
+_backgroundImageView.layer.cornerRadius = [%c(SBFolderBackgroundView) cornerRadiusToInsetContent];
+backgroundImageView.alpha = (view.alpha * 0.65);
+//reducing Opacity to bring out color of gradients 
+
+[view addSubview:backgroundImageView];
+} //end if wants image
+******/
+} //end of If full width folder
+
+if(kEnabled && kFolderGradientsEnabled) {
+
+view.layer.borderColor = [UIColor colorFromHexString: kNewBorderColor].CGColor;
+view.layer.borderWidth= kCustomBorderWidth;
+view.layer.cornerRadius = kBackgroundFolderRadius;
+
+UIImageView* tintView = MSHookIvar<UIImageView *>(self, "_tintView");
+
+tintView = [[UIImageView alloc]initWithFrame: view.frame];
+tintView.image = nil;
+
+tintView.backgroundColor = nil;
+tintView.layer.backgroundColor = nil;
+tintView.alpha = 0;
+tintView.userInteractionEnabled = 0;
+tintView.opaque = 1;
+tintView.hidden= YES; 
+_tintView= tintView;
+[_tintView setHidden: YES];
+
+CAGradientLayer* gradient = [CAGradientLayer layer];
+    gradient.frame = view.bounds;
+
+int randomInt= arc4random_uniform(7);
+if(!kRandomGradientsEnabled) { 
+switch (kGradientStyleSelection) {
+case 0: randomInt= 0; break;
+case 1: randomInt= 2; break;
+case 2: randomInt= 3; break;
+case 3: randomInt= 4; break;
+case 4: randomInt= 5; break;
+case 5: randomInt= 6; break;
+case 6: randomInt = 1; break;
+default: randomInt = 0; break; }
+}
+
+
+
+switch (randomInt) {
+case 0: gradient.startPoint = CGPointZero;
+gradient.endPoint = CGPointMake(1.0, 1.0);
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+   [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+break;
+case 1:  gradient.startPoint = CGPointMake(1.0, 0.5);
+gradient.endPoint = CGPointMake(0, 0.5);
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+   [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+break;
+case 2: gradient.startPoint = CGPointMake(0.5, 0);
+gradient.endPoint = CGPointMake(0.5, 1);
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kBorderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
+   [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+break;
+case 3:
+
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString: kBorderColorHex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
+
+gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.31],[NSNumber numberWithFloat:0.52],[NSNumber numberWithFloat:0.74],nil];
+
+   [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+
+break;
+
+case 4: 
+gradient.colors= [NSArray arrayWithObjects:(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+
+gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.15],[NSNumber numberWithFloat:0.37],[NSNumber numberWithFloat:0.80],nil];
+
+   [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+
+break;
+
+case 5: 
+    gradient.startPoint = CGPointMake(0, 0.5);
+    gradient.endPoint = CGPointMake(1.0, 0.5);
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+            [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+break;
+case 6:    gradient.startPoint = CGPointMake(0.9, 1.0);
+    gradient.endPoint = CGPointMake(0.15, 0.05);
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+            [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+break;
+
+default: 
+ gradient.startPoint = CGPointMake(0, 0.5);
+    gradient.endPoint = CGPointMake(1.0, 0.5);
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+            [view.layer insertSublayer:gradient atIndex:0];
+      [view.layer insertSublayer:gradient atIndex:1];
+break;
+} //end of switch
+
+return view;
+}
+else if(kEnabled && kColorFolders) {
+
+view.backgroundColor = [UIColor colorFromHexString:kOpenFolderColorHex];
+
+view.layer.borderColor = [UIColor colorFromHexString:kNewBorderColor].CGColor;
+view.layer.borderWidth= kCustomBorderWidth;
+view.layer.cornerRadius = kBackgroundFolderRadius;
+return view;
+}
+else { return view; }
+}
+
+-(id)_tintViewBackgroundColorAtFullAlpha {
+if((kEnabled && kColorFolders)&&(!kFolderGradientsEnabled)) {
+
+return [UIColor colorFromHexString:kOpenFolderColorHex];
+}
+
+else if(kEnabled && kFolderGradientsEnabled) {
+return nil;
+}
+else { 
+return %orig; }
 }
 
 -(void)_setContinuousCornerRadius:(CGFloat)arg1 {
@@ -74,28 +430,32 @@ return %orig(arg1);
 }
 return %orig;
 }
-%end
-/** more folder background stuff not used yet
--(BOOL)_shouldUseDarkBackground
-+(CGSize)folderBackgroundSize 
+
+-(void)layoutSubviews {
+if(kEnabled && kFolderGradientsEnabled) {
+/**
+|| kWantsOpenBackgroundImage))
+_backgroundImageView.hidden = NO;
 **/
+
+ 
+%orig;
+_tintView.hidden = YES;
+[_tintView setHidden: YES];
+
+_tintView.alpha = 0.01;
+_tintView.backgroundColor = [UIColor colorFromHexString: @"00000000"];
+_tintView.layer.backgroundColor= [UIColor colorFromHexString: @ "00000000"].CGColor;
+
+return;
+}
+else { return %orig; }
+}
+%end
+
 
 
 %hook SBFolderSettings
--(bool)allowNestedFolders {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return %orig;
-}
-
-- (void)setAllowNestedFolders:(bool)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = TRUE;
-        return %orig(arg1);
-    }
-    return %orig;
-}
 
 - (void)setPinchToClose:(bool)arg1 {
     if ((kEnabled) && (kWantsPinchToClose)) {
@@ -106,9 +466,8 @@ return %orig;
 }
 %end
 
-/* This method changes corner radius of folder icons, but Snowboard
- tweak and theme engine makes it not work. works with Anemone tho.
-*/
+/* This method changes corner radius of folder icons, but SNOWBOARD
+ tweak and theme engine makes it not work. works with ANEMONE still. */
 
 %hook SBIconImageView
 +(double)cornerRadius {
@@ -125,18 +484,129 @@ Changing FolderIconImageView radius at layer level works around Snowboard confli
 */
 %hook SBFolderIconImageView
 -(id)initWithFrame:(CGRect)frame {
-%orig;
- if ((kEnabled) && (kWantsCornerRadius)) {
-self.layer.cornerRadius = kIconCornerRadius;
-}
- if ((kEnabled) && (kColorIcons)) {
+if(!kEnabled) { return %orig; }
+SBFolderIconImageView *gradientView = %orig;
+ if((kWantsCornerRadius) && (kColorIcons)&& (!kIconGradientsEnabled)) {
+gradientView.layer.cornerRadius = kIconCornerRadius;
+gradientView.layer.borderWidth = kBorderWidth;
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 
-self.layer.borderWidth = kBorderWidth;
-self.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-self.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
-return self;
+gradientView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+
+//Just re-added I believe 
+
+gradientView.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
+return gradientView;
 }
-return self;
+else if((kWantsCornerRadius)&& (kIconGradientsEnabled)) {
+gradientView.layer.cornerRadius = kIconCornerRadius;
+
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+gradientView.layer.borderWidth = kBorderWidth;
+
+/* Didn’t work
+CAGradientLayer* gradient = [CAGradientLayer layer];
+    gradient.frame = gradientView.bounds;
+    gradient.startPoint = CGPointMake(0.5, 0);
+    gradient.endPoint = CGPointMake(0.5, 1.0);
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
+            [gradientView.layer insertSublayer:gradient atIndex:0];
+*/
+return gradientView;
+
+}
+else if(kIconGradientsEnabled) {
+
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+gradientView.layer.borderWidth = kBorderWidth;
+gradientView.layer.cornerRadius = kIconCornerRadius;
+/* Didn’t work right so removed
+CAGradientLayer* gradient = [CAGradientLayer layer];
+    gradient.frame = gradientView.bounds;
+    gradient.startPoint =  CGPointMake(0.5, 0);
+    gradient.endPoint = CGPointMake(1.0, 1.0);
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
+            [gradientView.layer insertSublayer:gradient atIndex:0];
+*/
+return gradientView;
+
+}
+else if (kColorIcons) {
+gradientView.layer.borderWidth = kBorderWidth;
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+gradientView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+return gradientView;
+}
+else if(kWantsCornerRadius) {
+gradientView.layer.cornerRadius = kIconCornerRadius;
+
+/*Just added this to make borders work without colored folders */
+gradientView.layer.borderWidth = kBorderWidth;
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+return gradientView;
+}
+else {
+return gradientView; }
+}
+
+%end
+
+
+%hook SBFolderIconBackgroundView
+-(id)initWithFrame:(CGRect)frame {
+SBFolderIconBackgroundView* gradientView = %orig;
+if(kEnabled && kIconGradientsEnabled) {
+
+gradientView.layer.cornerRadius = kIconCornerRadius;
+
+
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+gradientView.layer.borderWidth = kBorderWidth;
+
+/* Didn’t work so removed
+CAGradientLayer* gradient = [CAGradientLayer layer];
+    gradient.frame = gradientView.bounds;
+    gradient.startPoint = CGPointMake(0.5, 0);
+    gradient.endPoint = CGPointMake(0.5, 1.0);
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
+            [gradientView.layer insertSublayer:gradient atIndex:0];
+      [gradientView.layer insertSublayer:gradient atIndex:1];
+*/
+return gradientView;
+}
+else if(kEnabled && kWantsCornerRadius) {
+gradientView.layer.cornerRadius = kIconCornerRadius;
+
+
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+gradientView.layer.borderWidth = kBorderWidth;
+
+return gradientView;
+}
+/* Just added this to make Border work without color enabled */
+else if(kEnabled) {
+gradientView.layer.cornerRadius = kIconCornerRadius;
+
+
+gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+gradientView.layer.borderWidth = kBorderWidth;
+
+return gradientView;
+}
+else { 
+return gradientView;
+}
+}
+%end
+
+%hook SBIcon
+- (id)gridCellImage {
+if(kEnabled && kWantsNoMiniGrid) {
+return nil;
+}
+else {
+return  %orig;
+}
 }
 %end
 
@@ -151,7 +621,8 @@ return self;
 
 %hook SBFloatyFolderView
 -(bool)_showsTitle {
-    if (kHidesTitle) {
+
+if(kHidesTitle) {
         return 0;
     }
     return %orig;
@@ -160,8 +631,7 @@ return self;
 /*******
  FROM runtime header, this fixes bug where folder splits to multiple
  folders in landscape and loses dark BG. Keeps scrolling as the way to see next
- page. 
-**********/
+ page. **********/
  
  -(bool)_shouldConvertToMultipleIconListsInLandscapeOrientation {
 if(kEnabled) {
@@ -171,7 +641,7 @@ if(kEnabled) {
 }
 
 - (bool)_tapToCloseGestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2 {
-    if ((kEnabled) && (kWantsTapToClose)) {
+    if ((kEnabled) && ((kWantsTapToClose) || (kWantsAutoClose))) {
         return YES;
         %orig;
     }
@@ -200,10 +670,14 @@ if(kEnabled) {
     if ((kEnabled) && (kReducedTransOn)) {
         return 1;
         // makes backgroundViews darker
-}
-     return %orig;
-}
 
+    }
+else if((kEnabled) &&(!kNoFX)) {
+/** Tried to set a BG color here but didn’t work **/
+    return %orig;
+}
+else { return %orig; }
+}
 
 - (void)setEffectActive:(bool)arg1 {
 
@@ -211,14 +685,15 @@ if(kEnabled) {
         arg1 = FALSE;
 
 return %orig(arg1);
-}
-    return %orig; 
+
+    }
+else {
+    return %orig; }
 }
 %end
 
-
 %hook SBFolderBackgroundView
-+(void)_setContinuousCornerRadius : (CGFloat)arg1 {
++(void)_setContinuousCornerRadius:(CGFloat)arg1 {
     if ((kEnabled) && (kWantsCornerRadius)) {
         arg1 = kBackgroundFolderRadius;
         return %orig(arg1);
@@ -237,7 +712,7 @@ return %orig(arg1);
 
 %hook SBIconColorSettings
 -(bool)blurryFolderIcons {
-    if ((kEnabled) && (kFolderIconOpacityEnabled)) {
+    if ((kEnabled) && (kFolderIconOpacityEnabled)&&(!kIconGradientsEnabled)) {
         return FALSE;
     }
     return %orig;
@@ -259,9 +734,11 @@ return %orig(arg1);
 }
 %end
 
+//Just changed for gradients but didn’t work 
+
 %hook SBFWallpaperSettings
 -(bool)replaceBlurs {
-    if ((kEnabled) && (kFolderIconOpacityEnabled)) {
+    if ((kEnabled) && (kFolderIconOpacityEnabled)&&(!kIconGradientsEnabled)) {
         return TRUE;
     }
     return %orig;
@@ -271,7 +748,7 @@ return %orig(arg1);
 %hook SBFolderIconListView
 +(unsigned long long)maxVisibleIconRowsInterfaceOrientation
 : (long long)arg1 {
-    if ((kEnabled) && (kCustomLayout)) {
+    if ((kEnabled && kCustomLayout)&&(kCustomRows >= 1)) {
         %orig;
         return kCustomRows;
     }
@@ -284,8 +761,9 @@ return %orig(arg1);
 %hook SBFolderIconListView
 +(unsigned long long)iconColumnsForInterfaceOrientation : (long long)arg1 {
     
-    if ((kEnabled) && (kCustomLayout)) {
-        
+    if ((kEnabled && kCustomLayout)&& (kCustomColumns >= 1)) {
+        //Added extra conditional for when settings=nil
+
         %orig;
         return kCustomColumns;
     }
@@ -329,277 +807,42 @@ Custom inset tweaking relative to original insets determined by number of icons 
 }
 %end
 
-//more nested folder educated guesswork 
 
-%hook SBApplicationPlaceholder
--(bool)iconAllowsLaunch : (id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBBookmark
--(bool)iconAllowsLaunch : (id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool)allowsCapability : (long long)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool)allowsTransitionRequest : (id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconListModel
--(bool)allowsAddingIcon:(id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBStarkIconListModel
--(bool)allowsAddingIcon:(id)arg1 {
-    
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconModel
--(void)setAllowsSaving:(bool)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = TRUE;
-        return %orig(arg1);
-    }
-    return %orig;
-}
-
-- (bool)allowsSaving {
-    if ((kEnabled) && (kWantsNested)) {
-        
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBApplication
--(bool)iconAllowsLaunch : (id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBSpringBoardApplicationIcon
--(bool)iconAllowsLaunch : (id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBStarkIconController
--(bool)iconAllowsLaunch : (id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconView
--(bool)allowsTapWhileEditing {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBFolderIconView
--(bool)allowsTapWhileEditing {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBFolderController
--(bool)_allowUserInteraction {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBPolicyAggregator
--(bool)_allowsCapabilitySpotlightWithExplanation : (id *)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-%hook SBFolderTitleTextField
--(void)setAllowsEditing : (bool)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = TRUE;
-        return %orig(arg1);
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconListModel
--(bool)addIcon:(id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        %orig;
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-/* new methods in iOS 10 that I think blocks nested folders */
-
-%hook SBIconLayoutOverrideStrategy
-- (bool)preservesCurrentListOrigin {
-    if ((kEnabled) && (kWantsNested)) {
-        return 1;
-    }
-    return %orig;
-}
-
-- (id)initWithLayoutInsets:(UIEdgeInsets)arg1
-perservingCurrentListOrigin:(bool)arg2 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg2 = 1;
-        return %orig(arg1, arg2);
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconController
-- (bool)allowsNestedFolders {
-    if ((kEnabled) && (kWantsNested)) {
-        return YES;
-    }
-    return %orig;
-}
-%end
-
-%hook SBIconListView
-- (void)updateEditingStateAnimated : (bool)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = 0;
-        return %orig;
-    }
-    return %orig;
-}
-
-- (void)_sendLayoutDelegateWouldHaveMovedIcon:(id)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        arg1 = nil;
-        %orig(arg1);
-    }
-    %orig;
-}
-
-- (bool)allowsAddingIconCount:(unsigned long long)arg1 {
-    if ((kEnabled) && (kWantsNested)) {
-        return 1;
-        %orig;
-    } else {
-        return %orig;
-    }
-}
-%end
-
-%hook SBFolderController
-- (bool)canAcceptFolderIconDrags {
-    if ((kEnabled) && (kWantsNested)) {
-        return TRUE;
-    }
-    return %orig;
-}
-%end
-
-//Handle prefs with user defaults
 
 static void
 loadPrefs() {
     static NSUserDefaults *prefs = [[NSUserDefaults alloc]
                                     initWithSuiteName:@"com.i0stweak3r.foldercontroller"];
     
-    kEnabled = [prefs boolForKey:@"enabled"];
+    kEnabled =  [[prefs objectForKey:@"enabled"] boolValue] ? [prefs boolForKey:@"enabled"] : NO;
     
     kFloatyOpacityEnabled = [prefs boolForKey:@"floatyOpacityEnabled"];
-    
-    kFloatyOpacity = [[prefs objectForKey:@"floatyOpacity"] floatValue];
-    
+ 
     kFolderIconOpacityEnabled = [prefs boolForKey:@"folderIconOpacityEnabled"];
     
     kFolderIconOpacityWhite =
-    [[prefs objectForKey:@"folderIconOpacityWhite"] floatValue];
+    [[prefs objectForKey:@"folderIconOpacityWhite"] floatValue] ?     [[prefs objectForKey:@"folderIconOpacityWhite"] floatValue] : 70.f;
     
     kFolderIconOpacityColor =
-    [[prefs objectForKey:@"folderIconOpacityColor"] floatValue];
+    [[prefs objectForKey:@"folderIconOpacityColor"] floatValue] ?    [[prefs objectForKey:@"folderIconOpacityColor"] floatValue] : 70.f;
     
     kWantsCornerRadius = [prefs boolForKey:@"iconCornerRadiusEnabled"];
     
-    kIconCornerRadius = [[prefs objectForKey:@"iconCornerRadius"] floatValue];
+    kIconCornerRadius = [[prefs objectForKey:@"iconCornerRadius"] floatValue] ? [[prefs objectForKey:@"iconCornerRadius"] floatValue] : 10.f;
     
     kBackgroundFolderRadius =
-    [[prefs objectForKey:@"backgroundFolderRadius"] floatValue];
+    [[prefs objectForKey:@"backgroundFolderRadius"] floatValue] ?  [[prefs objectForKey:@"backgroundFolderRadius"] floatValue] : 38.f;
     
     kWantsTapToClose = [prefs boolForKey:@"wantsTapToClose"];
     
     kWantsPinchToClose = [prefs boolForKey:@"wantsPinchToClose"];
     
-    kHidesTitle = [prefs boolForKey:@"hidesTitle"];
-    
+    kHidesTitle =  [prefs boolForKey:@"hidesTitle"];
+
     kNoFX = [prefs boolForKey:@"noFX"];
     
-    kReducedTransOn = [prefs boolForKey:@"reducedTransOn"];
-    
+    kReducedTransOn =  [prefs boolForKey:@"reducedTransOn"];
+
     kCustomLayout = [prefs boolForKey:@"customLayout"];
     
     kCustomRows = [prefs integerForKey:@"customRows"];
@@ -613,27 +856,60 @@ loadPrefs() {
     kSideInset = [[prefs objectForKey:@"sideInset"] floatValue];
     
     kBottomInset = [[prefs objectForKey:@"bottomInset"] floatValue];
-    
-    kWantsNested = [prefs boolForKey:@"wantsNested"];
-//NEW STUFF ADDED
+
+kMultiItem = [prefs boolForKey:@"multiItem"];
+
 
 kColorFolders = [prefs boolForKey:@"colorFolders"];
 
-kOpenFolderColorHex =    [[prefs objectForKey:@"openFolderColorHex"] stringValue];
+kFolderGradientsEnabled =  [prefs boolForKey:@"folderGradientsEnabled"];
 
-kBorderColorHex =  [[prefs objectForKey:@"borderColorHex"] stringValue];
+kRandomGradientsEnabled = [prefs boolForKey:@"randomGradientsEnabled"];
 
-kCustomBorderWidth = [[prefs objectForKey:@"customBorderWidth"] floatValue];
+kOpenFolderColorHex =    [[prefs objectForKey:@"openFolderColorHex"] stringValue] ? [prefs stringForKey:@"openFolderColorHex"] : @"FF0000";
 
-kIconHex = [[prefs objectForKey:@"iconHex"] stringValue];
+kBorderColorHex =  [[prefs objectForKey:@"borderColorHex"] stringValue] ? [prefs stringForKey:@"borderColorHex"] : @"FF0000";  //Actually Open gradient 3
 
-kBorderHex =  [[prefs objectForKey:@"borderHex"] stringValue];
+kOpenGradient3Hex =   [[prefs objectForKey:@"openGradient3Hex"] stringValue] ? [prefs stringForKey:@"openGradient3Hex"] : @"000000";
+
+kCustomBorderWidth = [[prefs objectForKey:@"customBorderWidth"] floatValue] ? 
+ [[prefs objectForKey:@"customBorderWidth"] floatValue] : 0.f;
+
+kIconHex = [[prefs objectForKey:@"iconHex"] stringValue] ? [prefs stringForKey:@"iconHex"] : @"FF0000";
+
+kWantsNoMiniGrid= [[prefs objectForKey: @"wantsNoMiniGrid"] boolValue] ?  [prefs boolForKey:@"wantsNoMiniGrid"] : NO;
+
+/*
+kIconGradient3Hex=  [[prefs objectForKey:@"iconGradient3Hex"] stringValue];
+*/
+kIconGradientsEnabled =  [prefs boolForKey:@"iconGradientsEnabled"];
+//Actually is Support theme images option
+
+kBorderHex =  [[prefs objectForKey:@"borderHex"] stringValue] ? [prefs stringForKey:@"borderHex"] : @"000000";
 
 kBorderWidth = [[prefs objectForKey:@"borderWidth"] floatValue];
 
 kColorIcons =  [prefs boolForKey:@"colorIcons"];
+/**
+kWantsOpenBackgroundImage = [prefs boolForKey:@"wantsOpenBackgroundImage"];
+**/
 
-  
+kFolderSizeSelection = [[prefs objectForKey:@"folderSizeSelection"] integerValue] ?  [[prefs objectForKey:@"folderSizeSelection"] integerValue] : 0;
+
+kNewBorderColor =  [[prefs objectForKey:@"newBorderColor"] stringValue] ? 
+[prefs stringForKey:@"newBorderColor"] : @"000000";
+
+kGradientStyleSelection = [[prefs objectForKey:@"gradientStyleSelection"] integerValue];
+
+kWantsNoFolderDelete = [prefs boolForKey:@"wantsNoFolderDelete"];
+
+kWantsAutoClose=  [prefs boolForKey:@"wantsAutoClose"];
+
+
+kFloatyOpacity = [[prefs objectForKey: @"floatyOpacity"] floatValue] ? [[prefs objectForKey: @"floatyOpacity"] floatValue] : 100.f;
+
+kWantsStatusBarWithFolder = [prefs boolForKey:@"wantsStatusBar"];
+
 }
 
 %ctor {

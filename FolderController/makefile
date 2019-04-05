@@ -9,7 +9,6 @@ FolderController_INSTALL_PATH = /Library/PreferenceBundles
 FolderController_FRAMEWORKS = UIKit
 FolderController_PRIVATE_FRAMEWORKS = Preferences
 FolderController_LDFLAGS += -lCSColorPicker
-
 FolderController_CFLAGS = -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/bundle.mk
