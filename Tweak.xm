@@ -51,8 +51,9 @@ static bool kWantsNoFolderDelete;
 static bool kColorFolders = YES;
 static NSString *kOpenFolderColorHex =
 @"FF0000";
-static NSString *kBorderColorHex= @"FF0000";
+static NSString *kOpenGradient2Hex= @"FF0000";
 //actually this is gradient 3 now
+//was kBorderColorHex originally
 
 static CGFloat kCustomBorderWidth = 0;
 //closed folders or icons below
@@ -64,6 +65,7 @@ static bool kWantsNoMiniGrid = NO;
 
 static int kFolderSizeSelection = 0;
 static NSString *kOpenGradient3Hex = @"000000";
+
 static NSString *kIconGradient3Hex =  @"FF0000";
 
 static bool kFolderGradientsEnabled = YES;
@@ -287,25 +289,25 @@ default: randomInt = 0; break; }
 switch (randomInt) {
 case 0: gradient.startPoint = CGPointZero;
 gradient.endPoint = CGPointMake(1.0, 1.0);
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
    [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 1:  gradient.startPoint = CGPointMake(1.0, 0.5);
 gradient.endPoint = CGPointMake(0, 0.5);
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
    [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 2: gradient.startPoint = CGPointMake(0.5, 0);
 gradient.endPoint = CGPointMake(0.5, 1);
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kBorderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient2Hex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
    [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 3:
 
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString: kBorderColorHex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString: kOpenGradient2Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
 
 gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.31],[NSNumber numberWithFloat:0.52],[NSNumber numberWithFloat:0.74],nil];
 
@@ -315,7 +317,7 @@ gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.31],[N
 break;
 
 case 4: 
-gradient.colors= [NSArray arrayWithObjects:(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects:(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
 
 gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.15],[NSNumber numberWithFloat:0.37],[NSNumber numberWithFloat:0.80],nil];
 
@@ -327,13 +329,13 @@ break;
 case 5: 
     gradient.startPoint = CGPointMake(0, 0.5);
     gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
             [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 6:    gradient.startPoint = CGPointMake(0.9, 1.0);
     gradient.endPoint = CGPointMake(0.15, 0.05);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
             [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
@@ -341,7 +343,7 @@ break;
 default: 
  gradient.startPoint = CGPointMake(0, 0.5);
     gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
             [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
@@ -816,7 +818,8 @@ kRandomGradientsEnabled = [prefs boolForKey:@"randomGradientsEnabled"];
 
 kOpenFolderColorHex =    [[prefs objectForKey:@"openFolderColorHex"] stringValue] ? [prefs stringForKey:@"openFolderColorHex"] : @"FF0000";
 
-kBorderColorHex =  [[prefs objectForKey:@"borderColorHex"] stringValue] ? [prefs stringForKey:@"borderColorHex"] : @"FF0000";  //Actually Open gradient 3
+kOpenGradient2Hex =  [[prefs objectForKey:@"borderColorHex"] stringValue] ? [prefs stringForKey:@"borderColorHex"] : @"FF0000";  //Actually this is Open gradient 3
+//Was 1st used as a border
 
 kOpenGradient3Hex =   [[prefs objectForKey:@"openGradient3Hex"] stringValue] ? [prefs stringForKey:@"openGradient3Hex"] : @"000000";
 
