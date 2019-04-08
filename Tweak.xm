@@ -386,10 +386,7 @@ return %orig;
 
 -(void)layoutSubviews {
 if(kEnabled && kFolderGradientsEnabled) {
-/**
-|| kWantsOpenBackgroundImage))
-_backgroundImageView.hidden = NO;
-**/
+
 
  
 %orig;
@@ -438,68 +435,53 @@ Changing FolderIconImageView radius at layer level works around Snowboard confli
 %hook SBFolderIconImageView
 -(id)initWithFrame:(CGRect)frame {
 if(!kEnabled) { return %orig; }
-SBFolderIconImageView *gradientView = %orig;
+SBFolderIconImageView *folderIconImageView = %orig;
  if((kWantsCornerRadius) && (kColorIcons)&& (!kIconGradientsEnabled)) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 
-gradientView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+folderIconImageView.backgroundColor = [UIColor colorFromHexString:kIconHex];
 
 //Just re-added I believe 
 
-gradientView.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
-return gradientView;
+folderIconImageView.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
+return folderIconImageView;
 }
 else if((kWantsCornerRadius)&& (kIconGradientsEnabled)) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.borderWidth = kBorderWidth;
 
-/* Didn’t work
-CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = gradientView.bounds;
-    gradient.startPoint = CGPointMake(0.5, 0);
-    gradient.endPoint = CGPointMake(0.5, 1.0);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
-            [gradientView.layer insertSublayer:gradient atIndex:0];
-*/
-return gradientView;
+return folderIconImageView;
 
 }
 else if(kIconGradientsEnabled) {
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.cornerRadius = kIconCornerRadius;
-/* Didn’t work right so removed
-CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = gradientView.bounds;
-    gradient.startPoint =  CGPointMake(0.5, 0);
-    gradient.endPoint = CGPointMake(1.0, 1.0);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
-            [gradientView.layer insertSublayer:gradient atIndex:0];
-*/
-return gradientView;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+
+return folderIconImageView;
 
 }
 else if (kColorIcons) {
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.backgroundColor = [UIColor colorFromHexString:kIconHex];
-return gradientView;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+return folderIconImageView;
 }
 else if(kWantsCornerRadius) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 
 /*Just added this to make borders work without colored folders */
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-return gradientView;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+return folderIconImageView;
 }
 else {
-return gradientView; }
+return folderIconImageView; }
 }
 
 %end
@@ -507,42 +489,38 @@ return gradientView; }
 
 %hook SBFolderIconBackgroundView
 -(id)initWithFrame:(CGRect)frame {
-SBFolderIconBackgroundView* gradientView = %orig;
+SBFolderIconBackgroundView  *backgroundView = %orig;
 if(kEnabled && kIconGradientsEnabled) {
 
-gradientView.layer.cornerRadius = kIconCornerRadius;
+backgroundView.layer.cornerRadius = kIconCornerRadius;
 
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+backgroundView.layer.borderWidth = kBorderWidth;
 
-/* Didn’t work so removed
-CAGradientLayer* gradient = [CAGradientLayer layer];
-blah blah.... */
-
-return gradientView;
+return backgroundView;
 }
 else if(kEnabled && kWantsCornerRadius) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+backgroundView.layer.cornerRadius = kIconCornerRadius;
 
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+backgroundView.layer.borderWidth = kBorderWidth;
 
-return gradientView;
+return backgroundView;
 }
 /* Just added this to make Border work without color enabled */
 else if(kEnabled) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+backgroundView.layer.cornerRadius = kIconCornerRadius;
 
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+backgroundView.layer.borderWidth = kBorderWidth;
 
-return gradientView;
+return backgroundView;
 }
 else { 
-return gradientView;
+return backgroundView;
 }
 }
 %end
