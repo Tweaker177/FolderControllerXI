@@ -458,6 +458,10 @@ return folderIconImageView;
 
 }
 else if(kIconGradientsEnabled) {
+/* kIconGradients= supports theme image option. Right now the option is basically unused since I took away need for this switch to add borders to themed images or stock background (normal tint behind folder icons).
+
+Going to hopefully add option to hide theme image if it's off though and show stock background, but if on show folder masks from themes
+*/
 
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 folderIconImageView.layer.borderWidth = kBorderWidth;
