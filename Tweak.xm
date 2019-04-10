@@ -47,12 +47,13 @@ static bool kRandomGradientsEnabled = YES;
 static CGFloat screenHeight, screenWidth;
 static bool kWantsNoFolderDelete;
 
-
+static CGFloat kColoredFolderIconAlpha;
 static bool kColorFolders = YES;
 static NSString *kOpenFolderColorHex =
 @"FF0000";
-static NSString *kBorderColorHex= @"FF0000";
+static NSString *kOpenGradient2Hex= @"FF0000";
 //actually this is gradient 3 now
+//was kBorderColorHex originally
 
 static CGFloat kCustomBorderWidth = 0;
 //closed folders or icons below
@@ -64,6 +65,7 @@ static bool kWantsNoMiniGrid = NO;
 
 static int kFolderSizeSelection = 0;
 static NSString *kOpenGradient3Hex = @"000000";
+
 static NSString *kIconGradient3Hex =  @"FF0000";
 
 static bool kFolderGradientsEnabled = YES;
@@ -287,25 +289,25 @@ default: randomInt = 0; break; }
 switch (randomInt) {
 case 0: gradient.startPoint = CGPointZero;
 gradient.endPoint = CGPointMake(1.0, 1.0);
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
    [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 1:  gradient.startPoint = CGPointMake(1.0, 0.5);
 gradient.endPoint = CGPointMake(0, 0.5);
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
    [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 2: gradient.startPoint = CGPointMake(0.5, 0);
 gradient.endPoint = CGPointMake(0.5, 1);
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kBorderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient2Hex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
    [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 3:
 
-gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString: kBorderColorHex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects: (id)[UIColor colorFromHexString: kOpenGradient2Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString: kOpenGradient3Hex].CGColor, nil];
 
 gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.31],[NSNumber numberWithFloat:0.52],[NSNumber numberWithFloat:0.74],nil];
 
@@ -315,7 +317,7 @@ gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.31],[N
 break;
 
 case 4: 
-gradient.colors= [NSArray arrayWithObjects:(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+gradient.colors= [NSArray arrayWithObjects:(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor, (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor, (id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
 
 gradient.locations= [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.15],[NSNumber numberWithFloat:0.37],[NSNumber numberWithFloat:0.80],nil];
 
@@ -327,13 +329,13 @@ break;
 case 5: 
     gradient.startPoint = CGPointMake(0, 0.5);
     gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
             [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
 case 6:    gradient.startPoint = CGPointMake(0.9, 1.0);
     gradient.endPoint = CGPointMake(0.15, 0.05);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
             [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
@@ -341,7 +343,7 @@ break;
 default: 
  gradient.startPoint = CGPointMake(0, 0.5);
     gradient.endPoint = CGPointMake(1.0, 0.5);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kBorderColorHex].CGColor, nil];
+    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kOpenFolderColorHex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient3Hex].CGColor,(id)[UIColor colorFromHexString:kOpenGradient2Hex].CGColor, nil];
             [view.layer insertSublayer:gradient atIndex:0];
       [view.layer insertSublayer:gradient atIndex:1];
 break;
@@ -384,10 +386,7 @@ return %orig;
 
 -(void)layoutSubviews {
 if(kEnabled && kFolderGradientsEnabled) {
-/**
-|| kWantsOpenBackgroundImage))
-_backgroundImageView.hidden = NO;
-**/
+
 
  
 %orig;
@@ -436,68 +435,54 @@ Changing FolderIconImageView radius at layer level works around Snowboard confli
 %hook SBFolderIconImageView
 -(id)initWithFrame:(CGRect)frame {
 if(!kEnabled) { return %orig; }
-SBFolderIconImageView *gradientView = %orig;
+SBFolderIconImageView *folderIconImageView = %orig;
  if((kWantsCornerRadius) && (kColorIcons)&& (!kIconGradientsEnabled)) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 
-gradientView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+folderIconImageView.backgroundColor = [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha];
 
 //Just re-added I believe 
 
-gradientView.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
-return gradientView;
+folderIconImageView.layer.backgroundColor =  [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha].CGColor;
+return folderIconImageView;
 }
 else if((kWantsCornerRadius)&& (kIconGradientsEnabled)) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.borderWidth = kBorderWidth;
 
-/* Didn’t work
-CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = gradientView.bounds;
-    gradient.startPoint = CGPointMake(0.5, 0);
-    gradient.endPoint = CGPointMake(0.5, 1.0);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
-            [gradientView.layer insertSublayer:gradient atIndex:0];
-*/
-return gradientView;
+return folderIconImageView;
 
 }
 else if(kIconGradientsEnabled) {
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.cornerRadius = kIconCornerRadius;
-/* Didn’t work right so removed
-CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = gradientView.bounds;
-    gradient.startPoint =  CGPointMake(0.5, 0);
-    gradient.endPoint = CGPointMake(1.0, 1.0);
-    gradient.colors =[NSArray arrayWithObjects: (id)[UIColor colorFromHexString:kIconHex].CGColor, (id)[UIColor colorFromHexString:kIconGradient3Hex].CGColor, (id)[UIColor colorFromHexString: kBorderHex].CGColor, nil];
-            [gradientView.layer insertSublayer:gradient atIndex:0];
-*/
-return gradientView;
+return folderIconImageView;
 
 }
 else if (kColorIcons) {
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.backgroundColor = [UIColor colorFromHexString:kIconHex];
-return gradientView;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.backgroundColor = [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha];
+return folderIconImageView;
 }
 else if(kWantsCornerRadius) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 
 /*Just added this to make borders work without colored folders */
-gradientView.layer.borderWidth = kBorderWidth;
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-return gradientView;
+folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+return folderIconImageView;
 }
 else {
-return gradientView; }
+return folderIconImageView; }
 }
 
 %end
@@ -505,42 +490,38 @@ return gradientView; }
 
 %hook SBFolderIconBackgroundView
 -(id)initWithFrame:(CGRect)frame {
-SBFolderIconBackgroundView* gradientView = %orig;
+SBFolderIconBackgroundView  *backgroundView = %orig;
 if(kEnabled && kIconGradientsEnabled) {
 
-gradientView.layer.cornerRadius = kIconCornerRadius;
+backgroundView.layer.cornerRadius = kIconCornerRadius;
 
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+backgroundView.layer.borderWidth = kBorderWidth;
 
-/* Didn’t work so removed
-CAGradientLayer* gradient = [CAGradientLayer layer];
-blah blah.... */
-
-return gradientView;
+return backgroundView;
 }
 else if(kEnabled && kWantsCornerRadius) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+backgroundView.layer.cornerRadius = kIconCornerRadius;
 
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+backgroundView.layer.borderWidth = kBorderWidth;
 
-return gradientView;
+return backgroundView;
 }
 /* Just added this to make Border work without color enabled */
 else if(kEnabled) {
-gradientView.layer.cornerRadius = kIconCornerRadius;
+backgroundView.layer.cornerRadius = kIconCornerRadius;
 
 
-gradientView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-gradientView.layer.borderWidth = kBorderWidth;
+backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+backgroundView.layer.borderWidth = kBorderWidth;
 
-return gradientView;
+return backgroundView;
 }
 else { 
-return gradientView;
+return backgroundView;
 }
 }
 %end
@@ -816,7 +797,8 @@ kRandomGradientsEnabled = [prefs boolForKey:@"randomGradientsEnabled"];
 
 kOpenFolderColorHex =    [[prefs objectForKey:@"openFolderColorHex"] stringValue] ? [prefs stringForKey:@"openFolderColorHex"] : @"FF0000";
 
-kBorderColorHex =  [[prefs objectForKey:@"borderColorHex"] stringValue] ? [prefs stringForKey:@"borderColorHex"] : @"FF0000";  //Actually Open gradient 3
+kOpenGradient2Hex =  [[prefs objectForKey:@"borderColorHex"] stringValue] ? [prefs stringForKey:@"borderColorHex"] : @"FF0000";  //Actually this is Open gradient 3
+//Was 1st used as a border
 
 kOpenGradient3Hex =   [[prefs objectForKey:@"openGradient3Hex"] stringValue] ? [prefs stringForKey:@"openGradient3Hex"] : @"000000";
 
@@ -825,11 +807,12 @@ kCustomBorderWidth = [[prefs objectForKey:@"customBorderWidth"] floatValue] ?
 
 kIconHex = [[prefs objectForKey:@"iconHex"] stringValue] ? [prefs stringForKey:@"iconHex"] : @"FF0000";
 
+kColoredFolderIconAlpha = [[prefs objectForKey:@"coloredFolderIconAlpha"] floatValue] ? 
+ [[prefs objectForKey:@"coloredFolderIconAlpha"] floatValue] : 0.5f;
+
 kWantsNoMiniGrid= [[prefs objectForKey: @"wantsNoMiniGrid"] boolValue] ?  [prefs boolForKey:@"wantsNoMiniGrid"] : NO;
 
-/*
-kIconGradient3Hex=  [[prefs objectForKey:@"iconGradient3Hex"] stringValue];
-*/
+
 kIconGradientsEnabled =  [prefs boolForKey:@"iconGradientsEnabled"];
 //Actually is Support theme images option
 
@@ -838,9 +821,6 @@ kBorderHex =  [[prefs objectForKey:@"borderHex"] stringValue] ? [prefs stringFor
 kBorderWidth = [[prefs objectForKey:@"borderWidth"] floatValue];
 
 kColorIcons =  [prefs boolForKey:@"colorIcons"];
-/**
-kWantsOpenBackgroundImage = [prefs boolForKey:@"wantsOpenBackgroundImage"];
-**/
 
 kFolderSizeSelection = [[prefs objectForKey:@"folderSizeSelection"] integerValue] ?  [[prefs objectForKey:@"folderSizeSelection"] integerValue] : 0;
 
@@ -867,4 +847,6 @@ kWantsStatusBarWithFolder = [prefs boolForKey:@"wantsStatusBar"];
                                     CFSTR("com.i0stweak3r.foldercontroller-prefsreload"), NULL,
                                     CFNotificationSuspensionBehaviorDeliverImmediately);
     loadPrefs();
+     dlopen("/Library/MobileSubstrate/DynamicLibraries/Snowboard.dylib", RTLD_LAZY);
+    %init; 
 }
