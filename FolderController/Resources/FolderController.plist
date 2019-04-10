@@ -294,7 +294,6 @@
 			<key>showValue</key>
 			<true/>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -582,6 +581,30 @@
 			<string>iconHex</string>
 			<key>label</key>
 			<string>Folder icon color</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSTextCell</string>
+			<key>label</key>
+			<string>Custom color alpha:</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.i0stweak3r.foldercontroller-prefsreload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.5</real>
+			<key>defaults</key>
+			<string>com.i0stweak3r.foldercontroller</string>
+			<key>key</key>
+			<string>coloredFolderIconAlpha</string>
+			<key>max</key>
+			<integer>1</integer>
+			<key>min</key>
+			<real>0.0001</real>
+			<key>showValue</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
