@@ -47,7 +47,7 @@ static bool kRandomGradientsEnabled = YES;
 static CGFloat screenHeight, screenWidth;
 static bool kWantsNoFolderDelete;
 
-
+static CGFloat kColoredFolderIconAlpha;
 static bool kColorFolders = YES;
 static NSString *kOpenFolderColorHex =
 @"FF0000";
@@ -441,11 +441,11 @@ folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 folderIconImageView.layer.borderWidth = kBorderWidth;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 
-folderIconImageView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+folderIconImageView.backgroundColor = [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha];
 
 //Just re-added I believe 
 
-folderIconImageView.layer.backgroundColor = [UIColor colorFromHexString:kIconHex].CGColor;
+folderIconImageView.layer.backgroundColor =  [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha].CGColor;
 return folderIconImageView;
 }
 else if((kWantsCornerRadius)&& (kIconGradientsEnabled)) {
@@ -458,11 +458,7 @@ return folderIconImageView;
 
 }
 else if(kIconGradientsEnabled) {
-/* kIconGradients= supports theme image option. Right now the option is basically unused since I took away need for this switch to add borders to themed images or stock background (normal tint behind folder icons).
-
-Going to hopefully add option to hide theme image if it's off though and show stock background, but if on show folder masks from themes
-*/
-
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 folderIconImageView.layer.borderWidth = kBorderWidth;
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
@@ -472,8 +468,9 @@ return folderIconImageView;
 }
 else if (kColorIcons) {
 folderIconImageView.layer.borderWidth = kBorderWidth;
+folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
-folderIconImageView.backgroundColor = [UIColor colorFromHexString:kIconHex];
+folderIconImageView.backgroundColor = [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha];
 return folderIconImageView;
 }
 else if(kWantsCornerRadius) {
@@ -810,11 +807,12 @@ kCustomBorderWidth = [[prefs objectForKey:@"customBorderWidth"] floatValue] ?
 
 kIconHex = [[prefs objectForKey:@"iconHex"] stringValue] ? [prefs stringForKey:@"iconHex"] : @"FF0000";
 
+kColoredFolderIconAlpha = [[prefs objectForKey:@"coloredFolderIconAlpha"] floatValue] ? 
+ [[prefs objectForKey:@"coloredFolderIconAlpha"] floatValue] : 0.5f;
+
 kWantsNoMiniGrid= [[prefs objectForKey: @"wantsNoMiniGrid"] boolValue] ?  [prefs boolForKey:@"wantsNoMiniGrid"] : NO;
 
-/*
-kIconGradient3Hex=  [[prefs objectForKey:@"iconGradient3Hex"] stringValue];
-*/
+
 kIconGradientsEnabled =  [prefs boolForKey:@"iconGradientsEnabled"];
 //Actually is Support theme images option
 
@@ -823,9 +821,6 @@ kBorderHex =  [[prefs objectForKey:@"borderHex"] stringValue] ? [prefs stringFor
 kBorderWidth = [[prefs objectForKey:@"borderWidth"] floatValue];
 
 kColorIcons =  [prefs boolForKey:@"colorIcons"];
-/**
-kWantsOpenBackgroundImage = [prefs boolForKey:@"wantsOpenBackgroundImage"];
-**/
 
 kFolderSizeSelection = [[prefs objectForKey:@"folderSizeSelection"] integerValue] ?  [[prefs objectForKey:@"folderSizeSelection"] integerValue] : 0;
 
@@ -852,4 +847,6 @@ kWantsStatusBarWithFolder = [prefs boolForKey:@"wantsStatusBar"];
                                     CFSTR("com.i0stweak3r.foldercontroller-prefsreload"), NULL,
                                     CFNotificationSuspensionBehaviorDeliverImmediately);
     loadPrefs();
+     dlopen("/Library/MobileSubstrate/DynamicLibraries/Snowboard.dylib", RTLD_LAZY);
+    %init; 
 }
