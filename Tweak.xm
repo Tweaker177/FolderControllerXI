@@ -430,7 +430,7 @@ else { return %orig; }
 %end
 
 /*
-Changing FolderIconImageView radius at layer level works around Snowboard conflict 
+Changing FolderIconImageView radius at layer level works around Snowboard conflict when applying background color if opacity is set to zero in other 2 methods, the two sliders for opacity in tweak 
 */
 %hook SBFolderIconImageView
 -(id)initWithFrame:(CGRect)frame {
@@ -847,6 +847,13 @@ kWantsStatusBarWithFolder = [prefs boolForKey:@"wantsStatusBar"];
                                     CFSTR("com.i0stweak3r.foldercontroller-prefsreload"), NULL,
                                     CFNotificationSuspensionBehaviorDeliverImmediately);
     loadPrefs();
-     dlopen("/Library/MobileSubstrate/DynamicLibraries/Snowboard.dylib", RTLD_LAZY);
+   NSFileManager *fileManager = [NSFileManager defaultManager];
+
+NSString *pathForDylib = @"/Library/MobileSubstrate/DynamicLibraries/Snowboard.dylib";
+
+if ([fileManager fileExistsAtPath:pathForDylib]){ 
+
+ dlopen("/Library/MobileSubstrate/DynamicLibraries/Snowboard.dylib", RTLD_LAZY);
+}
     %init; 
 }
