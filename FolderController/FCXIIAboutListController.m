@@ -34,11 +34,6 @@ appearanceSettings.navigationBarBackgroundColor = [UIColor colorWithRed: .12 gre
     }
 return self;
 }
-/***
-+ (UIColor *)hb_tintColor {
-	return  [UIColor colorWithRed: 1.0 green: 0.5 blue: 0.01 alpha: 1.0];
-}
-***/
 
 - (id)tableView:(id)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 0) {
@@ -82,14 +77,7 @@ return self;
 		[[self navigationController] presentViewController:twitter animated:YES completion:nil];
 	}
 }
-/***
--(void)viewDidLoad {
-[super viewDidLoad];
-self.navigationController.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.f green:0.f blue:0.02f alpha:1.f];
 
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-   }
-***/
 -(void)viewWillAppear:(BOOL)animated {
 // [self reload];
 
@@ -101,22 +89,6 @@ CGRect frame = self.table.bounds;
     self.navigationController.navigationController.navigationBar.translucent = YES;
 }
 
-/**
-self.navigationController.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.f green:0.f blue:0.02f alpha:1.f];
-
-	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-   **/
-
-/******
--(void)viewWillDisappear:(BOOL)animated {
-
-self.navigationController.navigationController.navigationBar.barTintColor = nil;
-
-   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-
-    [super viewWillDisappear:animated];
-}
-***/
 
 -(void)loadView 
 {
