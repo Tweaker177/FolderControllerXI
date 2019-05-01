@@ -1,9 +1,9 @@
 Package: com.i0stweak3r.foldercontroller
 Name: FolderControllerXII
 Depends: mobilesubstrate, preferenceloader, firmware (>= 11.0), com.creaturesurvive.libcscolorpicker, ws.hbang.common (>= 1.11)
-Version: 1.0.8
+Version: 1.0.9
 Architecture: iphoneos-arm
-Description: An awesome folder tweak for making custom layouts, adjusting the opacity, size, corner radius, gradient colors, and other properties of folders, their icons, and background views. It has color pickers for open and closed folders, their borders, and sliders to set thickness of borders. Multi-select option for fast re-arranging of icons plus other useful features.
+Description: An awesome folder tweak for making custom layouts, adjusting the opacity, size, corner radius, gradient colors, and other properties of folders, their icons, and background views. It has color pickers for open and closed folders, their borders, and sliders to set thickness of borders. Multi-select option for fast re-arranging of icons plus other useful features. Updated by Nepeta for arm64e.
 Maintainer: i0s_tweak3r
 Author: i0s_tweak3r
 Section: Tweaks
