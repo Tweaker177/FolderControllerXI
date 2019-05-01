@@ -154,17 +154,8 @@ screenHeight = [[UIScreen mainScreen] bounds].size.height;
 if((kFolderSizeSelection == 1) || (kFolderSizeSelection == 2 && screenWidth > screenHeight)) {
 
 frame = CGRectMake(0, -20, screenWidth, 16.f);
-/**
-self.bounds = self.frame;
-self.center = CGPointMake(screenWidth / 2, self.bounds.height / 2);
-**/
+
 return self;
-/*
-return %orig(frame);
-//Bounds for full width on X= {0,0,345,56}
-//Frame= {15,89,345,56}, 0,52,345,56 up top
-//ContainerView statusbarheight = 44
-*/
 }
 return %orig;
 }
