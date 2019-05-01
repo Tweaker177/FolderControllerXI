@@ -15,9 +15,7 @@ appearanceSettings.statusBarTintColor = [UIColor yellowColor];
 appearanceSettings.navigationBarTintColor = [UIColor colorWithRed: 1.0 green: 0.5 blue: 0.01 alpha: 1.0];
 
 appearanceSettings.tableViewCellSeparatorColor = [UIColor colorWithWhite:0 alpha:0.8];
-/**
-appearanceSettings.navigationBarTitleColor = [UIColor colorWithRed: .80 green: .80 blue: 1.0 alpha: 1];
-**/
+
 appearanceSettings.tableViewCellBackgroundColor = [UIColor colorWithRed: .12 green: .12 blue: .3 alpha:1];
 
 appearanceSettings.tableViewCellTextColor = [UIColor colorWithRed: .80 green: .80 blue: 1.0 alpha: 1];
