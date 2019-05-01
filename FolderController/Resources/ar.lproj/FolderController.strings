@@ -50,6 +50,10 @@
 	<string>تغيير لون حدود الأيقونات</string>
 	<key>Colors open folders with either a solid color and border, a preset gradient blend of 3 colors you pick, or various gradient styles using the colors below. Border color also will appear if width is greater then zero.</key>
 	<string>يمكنك فتح مجلدات بألوان متعددة إما تغيير لون المجلد أو تغيير الحدود بلون مختلف أو مزج عدة ألوان  مسبقًا من ٣ ألوان تختارها ، أو أنماط متدرجة مختلفة باستخدام الألوان أدناه. سيظهر لون الحدود أيضًا إذا كان العرض أكبر من الصفر.</string>
+	<key>Credits and Support</key>
+	<string>الاعتمادات والدعم الفني</string>
+	<key>Custom color alpha:</key>
+	<string>ألفا للألوان المختارة:</string>
 	<key>Custom color folder icons, and pick custom border color and thickness. Turn on Support theme images if you have a folder icon as part of your theme you want to see. The border color will work still, but leave theme image original color as icon. Also makes tweak compatible for custom icon images.</key>
 	<string>تخصيص لون لأيقونات المجلد الى لون مخصص ، واختيار لون حدود وسمك مخصص. عند التفعيل يتم دعم التخصيص مع محرك الثيمات وسيعمل لون الحدود ، كما يجعل الأيقونات متوافقة مع الثيمات المخصصة.</string>
 	<key>Custom corner radiuses</key>
@@ -90,6 +94,8 @@
 	<string>الصفحة كاملة</string>
 	<key>Full Width</key>
 	<string>العرض بالكامل</string>
+	<key>Got bugs 🐜? Conflicting tweak(s)? 🤔 Visit Tech Support on the next page.  This is the best way to get help, since it emails your FolderControllerXII settings, and a list of installed packages that could be interfering.</key>
+	<string>هل لديك أخطاء؟ هل لديك تعارض في القرص (الأقراص)؟ قم بزيارة الدعم الفني في الصفحة التالية. هذه هي أفضل طريقة للحصول على المساعدة ، حيث إنها ترسل عبر البريد الإلكتروني إعدادات FolderControllerXII وقائمة الحزم المثبتة التي يمكن أن تتداخل.</string>
 	<key>Gradient color2:</key>
 	<string>لون المجلد أو التدرج ٢:</string>
 	<key>Gradient color3:</key>

@@ -7,8 +7,13 @@
 #import <UIKit/UIKit.h>
 #import <notify.h>
 #import <Social/Social.h>
+#import <CepheiPrefs/HBRootListController.h>
+#import <CepheiPrefs/HBAppearanceSettings.h>
 
-@interface FolderControllerListController: PSListController 
+ @interface HBTintedTableCell : PSTableCell
+@end
+
+@interface FolderControllerListController: HBRootListController
 
 -(void)respring:(id)sender;
 -(void)twitter;
@@ -18,7 +23,9 @@
 -(void)resetPrefs:(id)sender;
 - (void)love;
 - (id)tableView:(id)tableView viewForHeaderInSection:(NSInteger)section;
-
+/**
+-(void)tableView:(UITableView *)tableView willDisplayCell:(id)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
+**/
 @end
 
 @interface PSControlTableCell : PSTableCell
@@ -32,6 +39,14 @@
 @interface SRSwitchTableCell : PSSwitchTableCell
 @end
 
+/**
+@interface UISegmentedControl : UIControl
+@end
+
+@interface PSSegmentTableCell : UISegmentedControl
+**/
+
+
 @implementation SRSwitchTableCell
 
 -(id)initWithStyle:(int)style reuseIdentifier:(id)identifier specifier:(id)specifier { 
@@ -41,7 +56,7 @@
 //call the super init method
 	
 if (self) {
-		[((UISwitch *)[self control]) setOnTintColor:[UIColor blueColor]]; 
+		[((UISwitch *)[self control]) setOnTintColor:[UIColor redColor]]; 
 
 
 	}
@@ -52,6 +67,39 @@ if (self) {
 
 
 @implementation FolderControllerListController
+
+- (instancetype)init {
+    self = [super init];
+if (self) {
+        HBAppearanceSettings *appearanceSettings = [[HBAppearanceSettings alloc] init];
+        appearanceSettings.tintColor =  [UIColor colorWithRed: 1.0 green: 0.5 blue: 0.01 alpha: 1.0];
+
+appearanceSettings.statusBarTintColor = [UIColor yellowColor];
+        
+appearanceSettings.navigationBarTintColor = [UIColor colorWithRed: 1.0 green: 0.5 blue: 0.01 alpha: 1.0];
+
+appearanceSettings.tableViewCellSeparatorColor = [UIColor colorWithWhite:0 alpha:0.8];
+/**
+appearanceSettings.navigationBarTitleColor = [UIColor colorWithRed: .80 green: .80 blue: 1.0 alpha: 1];
+**/
+appearanceSettings.tableViewCellBackgroundColor = [UIColor colorWithRed: .12 green: .12 blue: .3 alpha:1];
+
+appearanceSettings.tableViewCellTextColor = [UIColor colorWithRed: .80 green: .80 blue: 1.0 alpha: 1];
+
+
+appearanceSettings.tableViewCellSelectionColor = [UIColor redColor];
+
+appearanceSettings.tableViewBackgroundColor =
+[UIColor colorWithRed: 0.f green: 0.f blue: 0.2f alpha:0.2];
+
+appearanceSettings.navigationBarBackgroundColor = [UIColor colorWithRed: .12 green: .12 blue: .3 alpha:0.85];
+
+        self.hb_appearanceSettings = appearanceSettings;
+    }
+return self;
+}
+
+
 - (id)specifiers {
 	if(_specifiers == nil) {
 		_specifiers = [self loadSpecifiersFromPlistName:@"FolderController" target:self];
@@ -104,13 +152,14 @@ if (self) {
 - (void)love
 {
 	SLComposeViewController *twitter = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-	[twitter setInitialText:@"#FolderControllerXII by @BrianVS is awesome! New update hosted by @YouRepo http://i0s-tweak3r-betas.yourepo.com Also coming soon to a default repo near you. iOS 11-12.1.2."];
+	[twitter setInitialText:@"I’m using #FolderControllerXII by @BrianVS Works on all devices from iOS 11-12.1.2."];
 	if (twitter != nil) {
 		[[self navigationController] presentViewController:twitter animated:YES completion:nil];
 	}
 }
 
-- (void) loadView
+
+-(void)loadView 
 {
 	[super loadView];
 
@@ -126,13 +175,48 @@ UIImage *heart = [[UIImage alloc] initWithContentsOfFile:[[self bundle] pathForR
 UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
 [button setBackgroundImage:heart forState:UIControlStateNormal];
 [button addTarget:self action:@selector(love) forControlEvents:UIControlEventTouchUpInside];
-button.adjustsImageWhenHighlighted = NO;
+button.adjustsImageWhenHighlighted = YES;
+//was no
 
 UIBarButtonItem *rightButton =[[UIBarButtonItem alloc] initWithCustomView:button];
 
 
     self.navigationItem.rightBarButtonItems=@[defaultsButton, rightButton];
+
 }
+
+-(void)viewWillAppear:(BOOL)animated {
+ [self reload];
+[super viewWillAppear:animated];
+
+    [self.navigationController.navigationController.navigationBar setShadowImage: [UIImage new]];
+    self.navigationController.navigationController.navigationBar.translucent = YES;
+}
+
+/** removed to use CepheiPrefs 
+self.navigationController.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.f green:0.f blue:0.02f alpha:1.f];
+
+Was  [UIColor blackColor];
+[UIColor colorWithRed:0.13 green:0.13 blue:0.22 alpha:1.0];
+
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+   
+    [[UIApplication sharedApplication] keyWindow].tintColor = [UIColor colorWithRed: 1.0 green: 0.5 blue: 0.01 alpha: 1.0];
+**/
+
+/***
+-(void)viewWillDisappear:(BOOL)animated {
+
+self.navigationController.navigationController.navigationBar.barTintColor = nil;
+
+   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+   [[UIApplication sharedApplication] keyWindow].tintColor = nil;
+
+    [super viewWillDisappear:animated];
+}
+***/
+
+
 	/* Header banner code learned from IndieDevKB’s GitHub */
 
 - (id)tableView:(id)tableView viewForHeaderInSection:(NSInteger)section {
@@ -167,6 +251,26 @@ UIBarButtonItem *rightButton =[[UIBarButtonItem alloc] initWithCustomView:button
         return [super tableView:tableView heightForHeaderInSection:section];
     }
 }
+/**
+-(void)tableView:(UITableView *)tableView willDisplayCell:(id)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+[super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+
+[cell setBackgroundColor:  [UIColor colorWithRed:0.2 green:0.2 blue:0.37 alpha:0.8]];
+}
+
+[cell setTextColor: [UIColor whiteColor]];
+***/
+/**
+if([cell isKindOfClass:[%c(PSSegmentTableCell)class]]) {
+
+self.cell.selectionStyle = UITableViewCellSelectionStyleGray;
+
+********/
+
+
+
+
 
 - (void)resetPrefs:(id)sender {
 
@@ -174,6 +278,10 @@ UIAlertController *alertWarning = [UIAlertController
                 alertControllerWithTitle:@"Reset to Defaults"
                                  message:@"Warning, this will delete all your currently saved settings, and respring. Are you sure you want to proceed?"
                           preferredStyle:UIAlertControllerStyleAlert];
+
+
+
+
 
 UIAlertAction* yesButton = [UIAlertAction
                     actionWithTitle:@"Yes, please"
@@ -185,6 +293,7 @@ NSString *appDomain = @"com.i0stweak3r.foldercontroller";
    
     [self respring:sender];
                             }];
+
 
 UIAlertAction* noButton = [UIAlertAction
                         actionWithTitle:@"No, thanks"
@@ -199,7 +308,7 @@ UIAlertAction* noButton = [UIAlertAction
 [alertWarning addAction:noButton];
 
 [self presentViewController:alertWarning animated:YES completion:nil];
-
+alertWarning.view.tintColor = [UIColor redColor];
 }
 
 @end

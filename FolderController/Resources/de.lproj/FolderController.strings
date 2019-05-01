@@ -7,7 +7,7 @@
 	<key>Adjust color alpha of uncolored folder icons, the image that appears behind rounded, custom colored folders.</key>
 	<string>Passen Sie das Farb-Alpha der nicht gefärbten Ordnersymbole an, das Bild, das hinter abgerundeten, benutzerdefinierten farbigen Ordnern angezeigt wird.</string>
 	<key>Adjust corner radius for open folder backgrounds.</key>
-	<string>Passen Sie den Eckenradius für Hintergründe für offene Ordner an</string>
+	<string>Passen Sie den Eckenradius für Hintergründe für offene Ordner an.</string>
 	<key>Adjust opacity or translucency of open folder backgrounds . Zero hides folder backgrounds completely.</key>
 	<string>Passen Sie die Deckkraft der Hintergründe für offene Ordner an. Null verbirgt Ordnerhintergründe vollständig.</string>
 	<key>Adjust slider to set custom max number of rows inside open folders.</key>
@@ -27,7 +27,7 @@
 	<key>Anything larger then zero enables the colored border for open folders, assuming one of the color switches are enabled.</key>
 	<string>Alles, was größer als Null ist, aktiviert den farbigen Rahmen für offene Ordner, vorausgesetzt, einer der Farbschalter ist aktiviert.</string>
 	<key>Apply changes</key>
-	<string>Änderungen übernehmen</string>
+	<string>Änderungen übernehmen (respring)</string>
 	<key>Auto-close when app opens</key>
 	<string>Ordner schließen, wenn App geöffnet wird</string>
 	<key>Border color</key>
@@ -50,6 +50,10 @@
 	<string>Farbsymbole + Rand</string>
 	<key>Colors open folders with either a solid color and border, a preset gradient blend of 3 colors you pick, or various gradient styles using the colors below. Border color also will appear if width is greater then zero.</key>
 	<string>Farben öffnen Ordner mit einer Farbe und einem Rand, einem voreingestellten Farbverlauf aus 3 ausgewählten Farben oder verschiedenen Farbverläufen mit den folgenden Farben. Die Rahmenfarbe wird auch angezeigt, wenn die Breite größer als Null ist.</string>
+	<key>Credits and Support</key>
+	<string>Credits und technische Unterstützung</string>
+	<key>Custom color alpha:</key>
+	<string>Alpha für ausgewählte Farbe:</string>
 	<key>Custom color folder icons, and pick custom border color and thickness. Turn on Support theme images if you have a folder icon as part of your theme you want to see. The border color will work still, but leave theme image original color as icon. Also makes tweak compatible for custom icon images.</key>
 	<string>Benutzerdefinierte Farbsymbole und benutzerdefinierte Randfarbe und -stärke auswählen. Aktivieren Sie "Support-Motivbilder", wenn Sie ein Ordnersymbol als Teil Ihres Designs haben, das Sie sehen möchten. Die Rahmenfarbe funktioniert weiterhin, aber die ursprüngliche Farbe des Motivbildes bleibt als Symbol erhalten. Macht Tweak-kompatibel für benutzerdefinierte Symbolbilder.</string>
 	<key>Custom corner radiuses</key>
@@ -90,6 +94,8 @@
 	<string>Volle Seite</string>
 	<key>Full Width</key>
 	<string>Gesamtbreite</string>
+	<key>Got bugs 🐜? Conflicting tweak(s)? 🤔 Visit Tech Support on the next page.  This is the best way to get help, since it emails your FolderControllerXII settings, and a list of installed packages that could be interfering.</key>
+	<string>Bekam Bugs 🐜? Konflikt zwischen Tweak(s)? 🤔 Besuchen Sie den technischen Support auf der nächsten Seite. Dies ist der beste Weg, um Hilfe zu erhalten, da Sie Ihre FolderControllerXII-Einstellungen per E-Mail sowie eine Liste der installierten Pakete erhalten, die stören könnten.</string>
 	<key>Gradient color2:</key>
 	<string>Farbverlauf 2:</string>
 	<key>Gradient color3:</key>

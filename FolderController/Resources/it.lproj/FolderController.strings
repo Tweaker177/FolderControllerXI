@@ -7,7 +7,7 @@
 	<key>Adjust color alpha of uncolored folder icons, the image that appears behind rounded, custom colored folders.</key>
 	<string>Regola l'alfa del colore delle icone delle cartelle non colorate, l'immagine che appare dietro le cartelle colorate, arrotondate e personalizzate.</string>
 	<key>Adjust corner radius for open folder backgrounds.</key>
-	<string>Regola il raggio dell'angolo delle cartelle aperte</string>
+	<string>Regola il raggio dell'angolo delle cartelle aperte.</string>
 	<key>Adjust opacity or translucency of open folder backgrounds . Zero hides folder backgrounds completely.</key>
 	<string>Regola l'opacità o la traslucenza degli sfondi delle cartelle aperte. Zero nasconde completamente gli sfondi delle cartelle.</string>
 	<key>Adjust slider to set custom max number of rows inside open folders.</key>
@@ -27,7 +27,7 @@
 	<key>Anything larger then zero enables the colored border for open folders, assuming one of the color switches are enabled.</key>
 	<string>Qualsiasi valore maggiore di zero abilita il bordo colorato per le cartelle aperte, purchè uno degli interruttori di colore sia abilitato.</string>
 	<key>Apply changes</key>
-	<string>Applica le modifiche</string>
+	<string>Applica le modifiche (respring)</string>
 	<key>Auto-close when app opens</key>
 	<string>Chiudi la cartella quando si apre l'app</string>
 	<key>Border color</key>
@@ -50,6 +50,10 @@
 	<string>Colore icone+bordi</string>
 	<key>Colors open folders with either a solid color and border, a preset gradient blend of 3 colors you pick, or various gradient styles using the colors below. Border color also will appear if width is greater then zero.</key>
 	<string>Colora le cartelle aperte con tinta unita e un bordo, una sfumatura preimpostata di 3 colori selezionati o vari stili di sfumatura utilizzando i colori sottostanti. Il colore del bordo apparirà se la spessore è maggiore di zero.</string>
+	<key>Credits and Support</key>
+	<string>Crediti e supporto tecnico</string>
+	<key>Custom color alpha:</key>
+	<string>Alfa per colore selezionato:</string>
 	<key>Custom color folder icons, and pick custom border color and thickness. Turn on Support theme images if you have a folder icon as part of your theme you want to see. The border color will work still, but leave theme image original color as icon. Also makes tweak compatible for custom icon images.</key>
 	<string>Scegli il colore personalizzato delle icone delle cartelle, i colori del bordo e lo spessore. Attiva "Immagini del tema di supporto" se hai un'icona di cartella come parte del tema che desideri vedere. Il colore del bordo funzionerà ancora, ma lascerà il colore originale dell'immagine a tema come icona. Rende anche il tweak compatibile per le immagini delle icone personalizzate.</string>
 	<key>Custom corner radiuses</key>
@@ -90,6 +94,8 @@
 	<string>Pagina Intera</string>
 	<key>Full Width</key>
 	<string>Larghezza Intera</string>
+	<key>Got bugs 🐜? Conflicting tweak(s)? 🤔 Visit Tech Support on the next page.  This is the best way to get help, since it emails your FolderControllerXII settings, and a list of installed packages that could be interfering.</key>
+	<string>Ho trovato bug 🐜? Tweak(s) in conflitto? Visita il supporto tecnico nella pagina successiva. Questo è il modo migliore per ottenere aiuto, dal momento che invia via e-mail le impostazioni di FolderControllerXII e un elenco di pacchetti installati che potrebbero interferire.</string>
 	<key>Gradient color2:</key>
 	<string>Colore sfumatura 2:</string>
 	<key>Gradient color3:</key>

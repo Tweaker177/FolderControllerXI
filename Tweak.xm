@@ -16,6 +16,10 @@ static bool kFloatyOpacityEnabled = YES;
 static bool kFolderIconOpacityEnabled = YES;
 static double kFolderIconOpacityColor;
 static double kFolderIconOpacityWhite;
+
+static CGFloat kColoredFolderIconAlpha;
+
+
 static bool kWantsCornerRadius = YES;
 static double kIconCornerRadius;
 static bool kWantsTapToClose = YES;
@@ -39,7 +43,8 @@ static double kBottomInset = 0.f;
 static double kSideInset = 0.f;
 static bool kCustomLayout = YES;
 static bool kHidesTitle;
-static NSString *kNewBorderColor = @"000000";
+static NSString *kOpenFolderBorderHex = @"000000";
+//Open Folder Border Color Hex
 static bool kWantsAutoClose = NO;
 
 static bool kRandomGradientsEnabled = YES;
@@ -47,31 +52,29 @@ static bool kRandomGradientsEnabled = YES;
 static CGFloat screenHeight, screenWidth;
 static bool kWantsNoFolderDelete;
 
-static CGFloat kColoredFolderIconAlpha;
-static bool kColorFolders = YES;
+
+static bool kColorFolders;
 static NSString *kOpenFolderColorHex =
 @"FF0000";
 static NSString *kOpenGradient2Hex= @"FF0000";
 //actually this is gradient 3 now
-//was kBorderColorHex originally
+
 
 static CGFloat kCustomBorderWidth = 0;
 //closed folders or icons below
 static NSString *kIconHex  = @"FF0000";
 static NSString *kBorderHex = @"000000";
 static CGFloat kBorderWidth = 0.f;
-static bool kColorIcons = YES;
-static bool kWantsNoMiniGrid = NO;
+static bool kColorIcons;
+static bool kWantsNoMiniGrid;
 
 static int kFolderSizeSelection = 0;
 static NSString *kOpenGradient3Hex = @"000000";
 
-static NSString *kIconGradient3Hex =  @"FF0000";
-
 static bool kFolderGradientsEnabled = YES;
 
-static bool kIconGradientsEnabled = YES; 
-//Actually is Supports Theme Image Enabled
+static bool kSupportThemeImages = YES; 
+/* Currently used to decide whether to color over theme images. If off just adds border if applicable. */
 
 static bool kMultiItem = YES;
 
@@ -100,7 +103,6 @@ UIImageView* _tintView;
 @interface SBFloatyFolderView : UIView
 /* not used, was going to use to adjust title appearance for full page folder and full-width in landscape
 -(CGFloat)_titleVerticleOffsetForOrientation:(NSInteger)arg1;
-
 -(CGFloat)_titleFontSize;
 */
 @end
@@ -145,14 +147,24 @@ return %orig;
 %hook SBFolderTitleTextField
 -(id)initWithFrame:(CGRect)frame {
 if(!kEnabled) { return %orig; }
+self= %orig;
 screenWidth = [[UIScreen mainScreen] bounds].size.width;
 screenHeight = [[UIScreen mainScreen] bounds].size.height;
 
 if((kFolderSizeSelection == 1) || (kFolderSizeSelection == 2 && screenWidth > screenHeight)) {
 
 frame = CGRectMake(0, -20, screenWidth, 16.f);
-
+/**
+self.bounds = self.frame;
+self.center = CGPointMake(screenWidth / 2, self.bounds.height / 2);
+**/
+return self;
+/*
 return %orig(frame);
+//Bounds for full width on X= {0,0,345,56}
+//Frame= {15,89,345,56}, 0,52,345,56 up top
+//ContainerView statusbarheight = 44
+*/
 }
 return %orig;
 }
@@ -250,7 +262,7 @@ view.bounds = view.frame;
 
 if(kEnabled && kFolderGradientsEnabled) {
 
-view.layer.borderColor = [UIColor colorFromHexString: kNewBorderColor].CGColor;
+view.layer.borderColor = [UIColor colorFromHexString: kOpenFolderBorderHex].CGColor;
 view.layer.borderWidth= kCustomBorderWidth;
 view.layer.cornerRadius = kBackgroundFolderRadius;
 
@@ -355,7 +367,7 @@ else if(kEnabled && kColorFolders) {
 
 view.backgroundColor = [UIColor colorFromHexString:kOpenFolderColorHex];
 
-view.layer.borderColor = [UIColor colorFromHexString:kNewBorderColor].CGColor;
+view.layer.borderColor = [UIColor colorFromHexString: kOpenFolderBorderHex].CGColor;
 view.layer.borderWidth= kCustomBorderWidth;
 view.layer.cornerRadius = kBackgroundFolderRadius;
 return view;
@@ -430,35 +442,37 @@ else { return %orig; }
 %end
 
 /*
-Changing FolderIconImageView radius at layer level works around Snowboard conflict when applying background color if opacity is set to zero in other 2 methods, the two sliders for opacity in tweak 
+Changing FolderIconImageView radius at layer level works around Snowboard conflict 
 */
 %hook SBFolderIconImageView
 -(id)initWithFrame:(CGRect)frame {
 if(!kEnabled) { return %orig; }
 SBFolderIconImageView *folderIconImageView = %orig;
- if((kWantsCornerRadius) && (kColorIcons)&& (!kIconGradientsEnabled)) {
+ if((kWantsCornerRadius) && (kColorIcons)&& (! kSupportThemeImages)) {
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 folderIconImageView.layer.borderWidth = kBorderWidth;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+folderIconImageView.layer.masksToBounds = YES;
 
 folderIconImageView.backgroundColor = [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha];
 
-//Just re-added I believe 
+
 
 folderIconImageView.layer.backgroundColor =  [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha].CGColor;
 return folderIconImageView;
 }
-else if((kWantsCornerRadius)&& (kIconGradientsEnabled)) {
+else if((kWantsCornerRadius)&& (kSupportThemeImages)) {
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
-
+folderIconImageView.layer.masksToBounds = YES;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 folderIconImageView.layer.borderWidth = kBorderWidth;
 
 return folderIconImageView;
 
 }
-else if(kIconGradientsEnabled) {
+else if(kSupportThemeImages) {
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.masksToBounds = YES;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 folderIconImageView.layer.borderWidth = kBorderWidth;
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
@@ -469,6 +483,7 @@ return folderIconImageView;
 else if (kColorIcons) {
 folderIconImageView.layer.borderWidth = kBorderWidth;
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
+folderIconImageView.layer.masksToBounds = YES;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 folderIconImageView.backgroundColor = [[UIColor colorFromHexString:kIconHex] colorWithAlphaComponent: kColoredFolderIconAlpha];
 return folderIconImageView;
@@ -476,9 +491,10 @@ return folderIconImageView;
 else if(kWantsCornerRadius) {
 folderIconImageView.layer.cornerRadius = kIconCornerRadius;
 
-/*Just added this to make borders work without colored folders */
+folderIconImageView.layer.masksToBounds = YES;
 folderIconImageView.layer.borderWidth = kBorderWidth;
 folderIconImageView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
+
 return folderIconImageView;
 }
 else {
@@ -491,11 +507,11 @@ return folderIconImageView; }
 %hook SBFolderIconBackgroundView
 -(id)initWithFrame:(CGRect)frame {
 SBFolderIconBackgroundView  *backgroundView = %orig;
-if(kEnabled && kIconGradientsEnabled) {
+if(kEnabled && kSupportThemeImages) {
 
 backgroundView.layer.cornerRadius = kIconCornerRadius;
 
-
+backgroundView.layer.masksToBounds = YES;
 backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 backgroundView.layer.borderWidth = kBorderWidth;
 
@@ -503,7 +519,7 @@ return backgroundView;
 }
 else if(kEnabled && kWantsCornerRadius) {
 backgroundView.layer.cornerRadius = kIconCornerRadius;
-
+backgroundView.layer.masksToBounds = YES;
 
 backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 backgroundView.layer.borderWidth = kBorderWidth;
@@ -513,7 +529,7 @@ return backgroundView;
 /* Just added this to make Border work without color enabled */
 else if(kEnabled) {
 backgroundView.layer.cornerRadius = kIconCornerRadius;
-
+backgroundView.layer.masksToBounds = YES;
 
 backgroundView.layer.borderColor = [UIColor colorFromHexString:kBorderHex].CGColor;
 backgroundView.layer.borderWidth = kBorderWidth;
@@ -599,10 +615,6 @@ if(kEnabled) {
         // makes backgroundViews darker
 
     }
-else if((kEnabled) &&(!kNoFX)) {
-/** Tried to set a BG color here but didn’t work **/
-    return %orig;
-}
 else { return %orig; }
 }
 
@@ -639,7 +651,7 @@ else {
 
 %hook SBIconColorSettings
 -(bool)blurryFolderIcons {
-    if ((kEnabled) && (kFolderIconOpacityEnabled)&&(!kIconGradientsEnabled)) {
+    if ((kEnabled) && (kFolderIconOpacityEnabled)&&(! kSupportThemeImages)) {
         return FALSE;
     }
     return %orig;
@@ -661,11 +673,11 @@ else {
 }
 %end
 
-/* changed for gradient icons but it didn’t work (don't remember if I changed back) */
+//Needed to make opacity zero of background
 
 %hook SBFWallpaperSettings
 -(bool)replaceBlurs {
-    if ((kEnabled) && (kFolderIconOpacityEnabled)&&(!kIconGradientsEnabled)) {
+    if ((kEnabled) && (kFolderIconOpacityEnabled)&&(! kSupportThemeImages)) {
         return TRUE;
     }
     return %orig;
@@ -797,8 +809,8 @@ kRandomGradientsEnabled = [prefs boolForKey:@"randomGradientsEnabled"];
 
 kOpenFolderColorHex =    [[prefs objectForKey:@"openFolderColorHex"] stringValue] ? [prefs stringForKey:@"openFolderColorHex"] : @"FF0000";
 
-kOpenGradient2Hex =  [[prefs objectForKey:@"borderColorHex"] stringValue] ? [prefs stringForKey:@"borderColorHex"] : @"FF0000";  //Actually this is Open gradient 3
-//Was 1st used as a border
+kOpenGradient2Hex =  [[prefs objectForKey:@"openGradient2Hex"] stringValue] ? [prefs stringForKey:@"openGradient2Hex"] : @"FF0000";  //Actually this is Open gradient 3
+
 
 kOpenGradient3Hex =   [[prefs objectForKey:@"openGradient3Hex"] stringValue] ? [prefs stringForKey:@"openGradient3Hex"] : @"000000";
 
@@ -812,19 +824,18 @@ kColoredFolderIconAlpha = [[prefs objectForKey:@"coloredFolderIconAlpha"] floatV
 
 kWantsNoMiniGrid= [[prefs objectForKey: @"wantsNoMiniGrid"] boolValue] ?  [prefs boolForKey:@"wantsNoMiniGrid"] : NO;
 
+kSupportThemeImages =  [[prefs objectForKey:@"supportThemeImages"]boolValue] ? [prefs boolForKey:@"supportThemeImages"] : NO;
 
-kIconGradientsEnabled =  [prefs boolForKey:@"iconGradientsEnabled"];
-//Actually is Support theme images option
 
 kBorderHex =  [[prefs objectForKey:@"borderHex"] stringValue] ? [prefs stringForKey:@"borderHex"] : @"000000";
 
-kBorderWidth = [[prefs objectForKey:@"borderWidth"] floatValue];
+kBorderWidth = [[prefs objectForKey:@"borderWidth"] floatValue] ? [[prefs objectForKey:@"borderWidth"] floatValue] : 0.f;
 
-kColorIcons =  [prefs boolForKey:@"colorIcons"];
+kColorIcons = [[prefs objectForKey:@"colorIcons"] boolValue] ? [prefs boolForKey:@"colorIcons"] : 0;
 
 kFolderSizeSelection = [[prefs objectForKey:@"folderSizeSelection"] integerValue] ?  [[prefs objectForKey:@"folderSizeSelection"] integerValue] : 0;
 
-kNewBorderColor =  [[prefs objectForKey:@"newBorderColor"] stringValue] ? 
+kOpenFolderBorderHex =  [[prefs objectForKey:@"newBorderColor"] stringValue] ? 
 [prefs stringForKey:@"newBorderColor"] : @"000000";
 
 kGradientStyleSelection = [[prefs objectForKey:@"gradientStyleSelection"] integerValue];
@@ -847,7 +858,7 @@ kWantsStatusBarWithFolder = [prefs boolForKey:@"wantsStatusBar"];
                                     CFSTR("com.i0stweak3r.foldercontroller-prefsreload"), NULL,
                                     CFNotificationSuspensionBehaviorDeliverImmediately);
     loadPrefs();
-   NSFileManager *fileManager = [NSFileManager defaultManager];
+NSFileManager *fileManager = [NSFileManager defaultManager];
 
 NSString *pathForDylib = @"/Library/MobileSubstrate/DynamicLibraries/Snowboard.dylib";
 

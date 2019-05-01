@@ -6,8 +6,8 @@
 	<string>Ajuste las carpetas cerradas (íconos de carpetas) radio de esquina de 0 al cuadrado y 28-30 al circular.</string>
 	<key>Adjust color alpha of uncolored folder icons, the image that appears behind rounded, custom colored folders.</key>
 	<string>Ajusta el valor alfa de los iconos de carpetas sin color, la imagen que aparece detrás de las carpetas redondeadas y de colores personalizados.</string>
-	<key>Adjust corner radius for open folder backgrounds</key>
-	<string>Ajustar el radio de la esquina para el fondo de la carpeta abierta</string>
+	<key>Adjust corner radius for open folder backgrounds.</key>
+	<string>Ajustar el radio de la esquina para el fondo de la carpeta abierta.</string>
 	<key>Adjust opacity or translucency of open folder backgrounds . Zero hides folder backgrounds completely.</key>
 	<string>Ajusta la opacidad o la transparencia de los fondos de carpetas abiertas. El valor cero oculta los fondos de la carpeta completamente.</string>
 	<key>Adjust slider to set custom max number of rows inside open folders.</key>
@@ -27,7 +27,7 @@
 	<key>Anything larger then zero enables the colored border for open folders, assuming one of the color switches are enabled.</key>
 	<string>Cualquier valor mayor a cero habilita el borde de color para las carpetas abiertas, suponiendo que una de las opciones de color esté habilitada.</string>
 	<key>Apply changes</key>
-	<string>Aplicar los cambios</string>
+	<string>Aplicar los cambios (respring)</string>
 	<key>Auto-close when app opens</key>
 	<string>Cerrarla cuando se abre un app</string>
 	<key>Border color</key>
@@ -39,17 +39,21 @@
 	<key>Choose one of the several different ways your three colors will be blended. If varied button is on it will be random each time folder is opened.</key>
 	<string>Elija una de las diferentes formas en que se mezclarán sus tres colores. Si el botón variado está activado, será aleatorio cada vez que se abra la carpeta.</string>
 	<key>Choose open folder size from the segment cell picker- normal (default), full width large square, or nearly full page. Make sure the tap to close feature is on for easy closing of full page folders. Theres room if you forget though.</key>
-	<string>Elija abrir el tamaño de la carpeta desde el selector: normal (predeterminado), cuadro grande de ancho completo o página casi completa. Asegúrese de que la función "tocar para cerrar" esté activada para cerrar fácilmente las carpetas de la página completa. Hay espacio si te olvidas.</string>
+	<string>Asegúrese de que la función "tocar para cerrar" esté activada para cerrar fácilmente las carpetas de la página completa. Hay espacio si te olvidas.</string>
 	<key>Closed folder coloring</key>
 	<string>Colorear para carpetas cerradas</string>
 	<key>Closed folder opacity</key>
 	<string>Opacidad de carpetas cerradas</string>
 	<key>Closing Folders</key>
-	<string>Cerrar capetas</string>
+	<string>Cerrar carpetas</string>
 	<key>Color icons+border</key>
 	<string>Colorear iconos y borde</string>
 	<key>Colors open folders with either a solid color and border, a preset gradient blend of 3 colors you pick, or various gradient styles using the colors below. Border color also will appear if width is greater then zero.</key>
 	<string>Colorear las carpetas abiertas con un color sólido y un borde, una combinación de degradado preestablecida de 3 colores que elija, o varios estilos de degradado utilizando los colores a continuación. El color del borde también aparecerá si el ancho es mayor que cero.</string>
+	<key>Credits and Support</key>
+	<string>Créditos y soporte técnico.</string>
+	<key>Custom color alpha:</key>
+	<string>Alpha para el color escogido:</string>
 	<key>Custom color folder icons, and pick custom border color and thickness. Turn on Support theme images if you have a folder icon as part of your theme you want to see. The border color will work still, but leave theme image original color as icon. Also makes tweak compatible for custom icon images.</key>
 	<string>Personalizar los iconos de las carpetas de colores y elija el color y el grosor del borde. Activar “Soporte imágenes de temas” sí tiene un icono de carpeta como parte del tema que desea ver. El color del borde aún funcionará, pero deje el color original de la imagen del tema como un icono. También hay un tweak compatible para imágenes de iconos personalizados.</string>
 	<key>Custom corner radiuses</key>
@@ -73,7 +77,7 @@
 	<key>Enable to change corner radius of open and closed folders. Respring needed to take affect for folder icons.</key>
 	<string>Habilitar para cambiar el radio de la esquina de las carpetas abiertas y cerradas. *Respring necesario.</string>
 	<key>Enable to change opacity of closed folders, how they appear as icons. If corner radius is set higher then standard folder (around 10.0) the corners of it will show unless you turn the opacity down. *Respring needed to take affect for most icon changes.</key>
-	<string>Habilitar para cambiar la opacidad de las carpetas cerradas, cómo aparecen como iconos. Si el radio de la esquina se establece más alto que la carpeta estándar (alrededor de 10.0), las esquinas se mostrarán a menos que baje la opacidad. *Respring necesario.</string>
+	<string>Habilitar para cambiar la opacidad de las carpetas cerradas, cómo aparecen como iconos. *Respring necesario.</string>
 	<key>Enable tweak</key>
 	<string>Habilitar el tweak</string>
 	<key>Folder color or gradient1:</key>
@@ -90,6 +94,8 @@
 	<string>Página completa</string>
 	<key>Full Width</key>
 	<string>Ancho Completo</string>
+	<key>Got bugs 🐜? Conflicting tweak(s)? 🤔 Visit Tech Support on the next page.  This is the best way to get help, since it emails your FolderControllerXII settings, and a list of installed packages that could be interfering.</key>
+	<string>¿Tienes errores? Conflictos? 🤔 Visite el soporte técnico en la página siguiente. Esta es la mejor manera de obtener ayuda, ya que envía por correo electrónico la configuración de FolderControllerXII y una lista de paquetes instalados que podrían estar interfiriendo.</string>
 	<key>Gradient color2:</key>
 	<string>Gradiente color2:</string>
 	<key>Gradient color3:</key>
@@ -111,7 +117,7 @@
 	<key>No background effects/blur</key>
 	<string>Sin efectos de fondo</string>
 	<key>Normal</key>
-	<string>Normal</string>
+	<string>Predeterminado</string>
 	<key>Open Folder Options</key>
 	<string>Opciones Para Carpetas Abiertas</string>
 	<key>Open folder coloring</key>
@@ -139,11 +145,11 @@
 	<key>Tap to close</key>
 	<string>Tocar para cerrar</string>
 	<key>Thank you for your purchase.  Any additional donations are greatly appreciated, as I will continue to improve the tweak, and provide support for iOS 12.</key>
-	<string>Gracias por su compra. Cualquier donación adicional será muy apreciada, continuaré mejorando el tweak y proporcionaré soporte para iOS 12.</string>
+	<string>Gracias por su compra. Cualquier donación adicional será muy apreciada, continuaré mejorando el paquete y proporcionaré soporte para iOS 12.</string>
 	<key>Turns on the tweak. Turn off to reset all changes to original values.</key>
-	<string>Activar tweak. Desactivar para restablecer todos los cambios a los valores originales.</string>
+	<string>Activar tweak. Desactivar para restablecer a valores originales.</string>
 	<key>Tweak created by:</key>
-	<string>Tweak creado por:</string>
+	<string>Paquete creado por:</string>
 	<key>Vary gradient styles</key>
 	<string>Varear estilos gradientes.</string>
 	<key>i0s_tweak3r</key>

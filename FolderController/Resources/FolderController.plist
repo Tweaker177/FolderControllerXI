@@ -246,7 +246,7 @@
 			<key>fallback</key>
 			<string>FF0000</string>
 			<key>key</key>
-			<string>borderColorHex</string>
+			<string>openGradient2Hex</string>
 			<key>label</key>
 			<string>Gradient color3:</string>
 		</dict>
@@ -542,9 +542,9 @@
 			<key>default</key>
 			<false/>
 			<key>defaults</key>
-			<string>com.i0stweak3r.foldercontroller</string>
+<string>com.i0stweak3r.foldercontroller</string>
 			<key>key</key>
-			<string>iconGradientsEnabled</string>
+			<string>supportThemeImages</string>
 			<key>label</key>
 			<string>Support theme images</string>
 		</dict>
@@ -923,70 +923,36 @@
 		<dict>
 			<key>action</key>
 			<string>respring:</string>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+ <key>cellClass</key>
+    <string>HBTintedTableCell</string>
 			<key>label</key>
 			<string>Apply changes</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Got bugs 🐜? Conflicting tweak(s)? 🤔 Visit Tech Support on the next page.  This is the best way to get help, since it emails your FolderControllerXII settings, and a list of installed packages that could be interfering.</string>
 			<key>label</key>
-			<string>Tweak created by:</string>
+			<string>Credits and Support</string>
 		</dict>
 		<dict>
 			<key>alignment</key>
 			<integer>2</integer>
 			<key>cell</key>
-			<string>PSTitleValueCell</string>
-			<key>height</key>
-			<integer>29</integer>
-			<key>icon</key>
-			<string>i0s_tweak3r.png</string>
+			<string>PSLinkCell</string>
+			<key>detail</key>
+		<string>FCXIIAboutListController</string>
+			<key>isController</key>
+			<true/>
+ <key>cellClass</key>
+    <string>HBTintedTableCell</string>
 			<key>label</key>
-			<string>i0s_tweak3r</string>
-		</dict>
-		<dict>
-			<key>action</key>
-			<string>twitter</string>
-			<key>alignment</key>
-			<integer>2</integer>
-			<key>cell</key>
-			<string>PSButtonCell</string>
-			<key>icon</key>
-			<string>twitter.png</string>
-			<key>label</key>
-			<string>@BrianVS</string>
-		</dict>
-		<dict>
-			<key>cell</key>
-			<string>PSGroupCell</string>
-			<key>label</key>
-			<string>Settings improved by:</string>
-		</dict>
-		<dict>
-			<key>alignment</key>
-			<integer>2</integer>
-			<key>cell</key>
-			<string>PSTitleValueCell</string>
-			<key>height</key>
-			<integer>29</integer>
-			<key>icon</key>
-			<string>IndieDevKB.png</string>
-			<key>label</key>
-			<string>IndieDevKB</string>
-		</dict>
-		<dict>
-			<key>action</key>
-			<string>indieDevTwitter</string>
-			<key>alignment</key>
-			<integer>2</integer>
-			<key>cell</key>
-			<string>PSButtonCell</string>
-			<key>icon</key>
-			<string>twitter.png</string>
-			<key>label</key>
-			<string>IndieDevKB</string>
+			<string>ABOUT</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -997,8 +963,12 @@
 		<dict>
 			<key>action</key>
 			<string>addMyRepo</string>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+ <key>cellClass</key>
+    <string>HBTintedTableCell</string>
 			<key>icon</key>
 			<string>yourepo.png</string>
 			<key>label</key>
@@ -1007,8 +977,12 @@
 		<dict>
 			<key>action</key>
 			<string>myOtherTweaks</string>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+ <key>cellClass</key>
+    <string>HBTintedTableCell</string>
 			<key>icon</key>
 			<string>bigboss.png</string>
 			<key>label</key>
@@ -1023,13 +997,18 @@
 		<dict>
 			<key>action</key>
 			<string>Paypal</string>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
 			<string>PSButtonCell</string>
+ <key>cellClass</key>
+    <string>HBTintedTableCell</string>
 			<key>icon</key>
 			<string>Paypal@2x.png</string>
 			<key>label</key>
 			<string>Donations much appreciated</string>
 		</dict>
+
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
@@ -1037,6 +1016,8 @@
 			<string></string>
 		</dict>
 		<dict>
+			<key>alignment</key>
+			<integer>2</integer>
 			<key>cell</key>
 			<string>PSTextCell</string>
 			<key>label</key>
@@ -1044,6 +1025,6 @@
 		</dict>
 	</array>
 	<key>title</key>
-	<string></string>
+	<string>FolderControllerXII</string>
 </dict>
 </plist>

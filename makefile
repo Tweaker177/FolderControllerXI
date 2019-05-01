@@ -1,4 +1,4 @@
-ARCHS = arm64 armv7
+ARCHS = arm64 arm64e
 #TARGET = iphone:clang:11.2:7.0
 DEBUG = 0
 #CFLAGS = -fobjc-arc
